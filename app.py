@@ -13,10 +13,15 @@ db = SQLAlchemy(app)
 
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    usuario = db.Column(db.String(50), unique=True, nullable=False)
+    grado = db.Column(db.String(20), nullable=False)
+    nombres = db.Column(db.String(100), nullable=False)
+    apellidos = db.Column(db.String(100), nullable=False)
+    cedula = db.Column(db.String(20), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    rol = db.Column(db.String(20), nullable=False)
-    cai = db.Column(db.String(50), nullable=False)
+    rol = db.Column(db.String(30), nullable=False)
+    unidad = db.Column(db.String(100), nullable=False)
+    cai = db.Column(db.String(100), nullable=False)
+    estado = db.Column(db.String(20), default="Activo")
 
 
 with app.app_context():
