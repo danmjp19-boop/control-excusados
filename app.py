@@ -46,7 +46,10 @@ def login():
         ).first()
 
         if user:
-            return f"Bienvenido {user.usuario} ({user.rol})"
+           return render_template(
+    "admin.html",
+    usuario=user.usuario
+)
 
         return "Usuario o contraseña incorrectos"
 
