@@ -28,13 +28,19 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
-    if Usuario.query.filter_by(usuario="admin").first() is None:
+    if Usuario.query.filter_by(cedula="1000000000").first() is None:
         admin = Usuario(
-            usuario="admin",
-            password="123456",
-            rol="Administrador",
-            cai="SUBA"
-        )
+    grado="SI",
+    nombres="Administrador",
+    apellidos="Sistema",
+    cedula="1000000000",
+    password="123456",
+    rol="Administrador",
+    unidad="ESTACION SUBA",
+    cai="CAI ANDES",
+    estado="Activo"
+)
+        
         db.session.add(admin)
         db.session.commit()
 
@@ -45,15 +51,14 @@ def login():
         usuario = request.form["usuario"]
         password = request.form["password"]
 
-        user = Usuario.query.filter_by(
-            usuario=usuario,
-            password=password
-        ).first()
+       user = Usuario.query.filter_by(
+    cedula=usuario,
+    password=password
+).first()
 
-        if user:
-           return render_template(
+       return render_template(
     "admin.html",
-    usuario=user.usuario
+    usuario=user.nombres
 )
 
         return "Usuario o contraseña incorrectos"
