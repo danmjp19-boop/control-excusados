@@ -1,25 +1,42 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Panel Administrador</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-<h1>Panel del Administrador</h1>
+{% block title %}Panel Administrador{% endblock %}
 
-<p>Bienvenido {{ usuario }}</p>
+{% block content %}
 
-<hr>
+<h1>Dashboard</h1>
 
-<h2>Opciones</h2>
+<br>
 
-<ul>
-    <li>Crear usuarios</li>
-    <li>Ver excusas</li>
-    <li>Registrar excusas</li>
-    <li>Reportes</li>
-</ul>
+<div class="card">
+    <h2>Bienvenido {{ usuario }}</h2>
+    <p>Sistema de Control de Personal Excusado</p>
+</div>
 
-</body>
-</html>
+<br>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap;">
+
+    <div class="card" style="width:220px;">
+        <h3>👥 Usuarios</h3>
+        <h1>0</h1>
+    </div>
+
+    <div class="card" style="width:220px;">
+        <h3>📄 Excusas Activas</h3>
+        <h1>0</h1>
+    </div>
+
+    <div class="card" style="width:220px;">
+        <h3>⚠ Vencen Hoy</h3>
+        <h1>0</h1>
+    </div>
+
+    <div class="card" style="width:220px;">
+        <h3>📊 Total Registradas</h3>
+        <h1>0</h1>
+    </div>
+
+</div>
+
+{% endblock %}
