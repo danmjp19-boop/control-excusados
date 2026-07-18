@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Control Excusados{% endblock %}</title>
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>🚔 Excusas</h2>
+
+    <a href="/">🏠 Dashboard</a>
+    <a href="/usuarios">👥 Usuarios</a>
+    <a href="#">📄 Excusas</a>
+    <a href="#">📊 Reportes</a>
+    <a href="#">⚙ Configuración</a>
+</div>
+
+<div class="contenido">
+
+    <div class="topbar">
+        <h3>Control de Personal Excusado</h3>
+    </div>
+
+    <div class="pagina">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</div>
+
+</body>
+</html>
