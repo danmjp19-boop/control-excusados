@@ -36,6 +36,20 @@ with app.app_context():
 
 @app.route("/", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        usuario = request.form["usuario"]
+        password = request.form["password"]
+
+        user = Usuario.query.filter_by(
+            usuario=usuario,
+            password=password
+        ).first()
+
+        if user:
+            return f"Bienvenido {user.usuario} ({user.rol})"
+
+        return "Usuario o contraseña incorrectos"
+
     return render_template("login.html")
 
 
