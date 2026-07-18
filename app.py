@@ -51,23 +51,20 @@ def login():
         usuario = request.form["usuario"]
         password = request.form["password"]
 
-       user = Usuario.query.filter_by(
-    cedula=usuario,
-    password=password
-).first()
+        user = Usuario.query.filter_by(
+            cedula=usuario,
+            password=password
+        ).first()
 
-       return render_template(
-    "admin.html",
-    usuario=user.nombres
-)
+        if user:
+            return render_template(
+                "admin.html",
+                usuario=user.nombres
+            )
 
         return "Usuario o contraseña incorrectos"
 
     return render_template("login.html")
-
-@app.route("/usuarios")
-def usuarios():
-    return render_template("usuarios.html")
 
 
 if __name__ == "__main__":
