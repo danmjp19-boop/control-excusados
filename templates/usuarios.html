@@ -4,51 +4,54 @@
 
 {% block content %}
 
-<h1>Gestión de Usuarios</h1>
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
+    <h1>Gestión de Usuarios</h1>
+
+    <button class="btn-nuevo">
+        ➕ Nuevo Usuario
+    </button>
+
+</div>
 
 <br>
 
 <div class="card">
 
-<form>
+    <input
+        type="text"
+        placeholder="🔍 Buscar usuario..."
+        style="width:300px;padding:10px;margin-bottom:20px;">
 
-<label>Grado</label><br>
-<input type="text"><br><br>
+    <table width="100%" cellspacing="0">
 
-<label>Nombres y Apellidos</label><br>
-<input type="text"><br><br>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Grado</th>
+                <th>Nombre</th>
+                <th>CAI</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
 
-<label>Cédula</label><br>
-<input type="text"><br><br>
+        <tbody>
 
-<label>Contraseña</label><br>
-<input type="password"><br><br>
+            <tr>
+                <td>1</td>
+                <td>SI</td>
+                <td>Administrador</td>
+                <td>CAI Andes</td>
+                <td>Administrador</td>
+                <td>🟢 Activo</td>
+                <td>✏️ Editar | 🔒 Desactivar</td>
+            </tr>
 
-<label>Rol</label><br>
-<select>
-    <option>Administrador</option>
-    <option>Supervisor</option>
-    <option>Secretario</option>
-</select>
+        </tbody>
 
-<br><br>
-
-<label>CAI</label><br>
-
-<select>
-    <option>CAI Andes</option>
-    <option>CAI Aures</option>
-    <option>CAI Gaitana</option>
-    <option>CAI Lisboa</option>
-</select>
-
-<br><br>
-
-<button type="submit">
-Guardar Usuario
-</button>
-
-</form>
+    </table>
 
 </div>
 
