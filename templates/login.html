@@ -1,22 +1,67 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Control Excusados</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Control de Personal Excusado</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
-<body>
 
-<h1>Control de Personal Excusado</h1>
+<body class="login-page">
 
-<form method="POST">
-    <label>Usuario</label><br>
-    <input type="text" name="usuario" required><br><br>
+<div class="login-container">
 
-    <label>Contraseña</label><br>
-    <input type="password" name="password" required><br><br>
+    <div class="login-logo">
 
-    <button type="submit">Ingresar</button>
-</form>
+        🚓
+
+    </div>
+
+    <h1>Sistema de Control de Personal Excusado</h1>
+
+    <p>Policía Metropolitana de Bogotá</p>
+
+    <form method="POST">
+
+        <div class="input-group">
+
+            <label>Cédula</label>
+
+            <input type="text" name="usuario" placeholder="Ingrese la cédula" required>
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Contraseña</label>
+
+            <input type="password" name="password" placeholder="Ingrese la contraseña" required>
+
+        </div>
+
+        <button type="submit">
+
+            Iniciar sesión
+
+        </button>
+
+    </form>
+
+    <div class="version">
+
+        Versión 1.0
+
+    </div>
+
+</div>
 
 </body>
+
 </html>
