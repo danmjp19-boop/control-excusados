@@ -3,6 +3,23 @@ from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+from flask_sqlalchemy import SQLAlchemy
+import os
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    usuario = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(100))
+    rol = db.Column(db.String(50))
+    cai = db.Column(db.String(50))
+
+
 app.secret_key = "control_excusados_2026"
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
@@ -23,6 +40,20 @@ with app.app_context():
 @app.route("/", methods=["GET","POST"])
 def login():
     return render_template("login.html")
+
+with app.app_context():
+    db.create_all()
+
+    if Usuario.query.filter_by(usuario="admin").first() is None:
+        admin = Usuario(
+            usuario="admin",
+            password="123456",
+            rol="Administrador",
+            cai="SUBA"
+        )
+        db.session.add(admin)
+        db.session.commit()
+        
 
 if __name__ == "__main__":
     app.run(debug=True)
