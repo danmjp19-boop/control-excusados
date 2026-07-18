@@ -1,1 +1,55 @@
+{% extends "base.html" %}
 
+{% block title %}Usuarios{% endblock %}
+
+{% block content %}
+
+<h1>Gestión de Usuarios</h1>
+
+<br>
+
+<div class="card">
+
+<form>
+
+<label>Grado</label><br>
+<input type="text"><br><br>
+
+<label>Nombres y Apellidos</label><br>
+<input type="text"><br><br>
+
+<label>Cédula</label><br>
+<input type="text"><br><br>
+
+<label>Contraseña</label><br>
+<input type="password"><br><br>
+
+<label>Rol</label><br>
+<select>
+    <option>Administrador</option>
+    <option>Supervisor</option>
+    <option>Secretario</option>
+</select>
+
+<br><br>
+
+<label>CAI</label><br>
+
+<select>
+    <option>CAI Andes</option>
+    <option>CAI Aures</option>
+    <option>CAI Gaitana</option>
+    <option>CAI Lisboa</option>
+</select>
+
+<br><br>
+
+<button type="submit">
+Guardar Usuario
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}
