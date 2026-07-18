@@ -68,8 +68,8 @@ def login():
 
 @app.route("/usuarios")
 def usuarios():
-    return render_template("usuarios.html")
-
+    usuarios = Usuario.query.all()
+    return render_template("usuarios.html", usuarios=usuarios)
 
 if __name__ == "__main__":
     app.run(debug=True)
