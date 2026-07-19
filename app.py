@@ -71,5 +71,9 @@ def usuarios():
     usuarios = Usuario.query.all()
     return render_template("usuarios.html", usuarios=usuarios)
 
+@app.route("/excusas")
+def excusas():
+    return render_template("excusas.html")
+    
 if __name__ == "__main__":
     app.run(debug=True)
