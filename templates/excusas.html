@@ -2,72 +2,23 @@
 
 {% block content %}
 
-<h1>Registrar Excusa</h1>
+<h1>Nueva Excusa</h1>
 
-<div class="card">
+<div class="upload-card">
 
-<form>
+    <h2>📄 Cargar Excusa</h2>
 
-<div class="input-group">
-<label>Grado</label>
-<input type="text" placeholder="Ej. SI">
-</div>
+    <form method="POST" enctype="multipart/form-data">
 
-<div class="input-group">
-<label>Nombres</label>
-<input type="text">
-</div>
+        <input type="file" name="excusa" accept="image/*,.pdf">
 
-<div class="input-group">
-<label>Apellidos</label>
-<input type="text">
-</div>
+        <br><br>
 
-<div class="input-group">
-<label>Cédula</label>
-<input type="text">
-</div>
+        <button type="submit">
+            Procesar Excusa
+        </button>
 
-<div class="input-group">
-<label>CAI</label>
-<input type="text">
-</div>
-
-<div class="input-group">
-<label>Fecha Inicio</label>
-<input type="date">
-</div>
-
-<div class="input-group">
-<label>Fecha Final</label>
-<input type="date">
-</div>
-
-<div class="input-group">
-<label>Días</label>
-<input type="number">
-</div>
-
-<div class="input-group">
-<label>Entidad de Salud</label>
-<input type="text">
-</div>
-
-<div class="input-group">
-<label>Número de Orden</label>
-<input type="text">
-</div>
-
-<div class="input-group">
-<label>Adjuntar Excusa</label>
-<input type="file">
-</div>
-
-<button type="submit">
-Guardar Excusa
-</button>
-
-</form>
+    </form>
 
 </div>
 
