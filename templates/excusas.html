@@ -1,1 +1,74 @@
+{% extends "base.html" %}
 
+{% block content %}
+
+<h1>Registrar Excusa</h1>
+
+<div class="card">
+
+<form>
+
+<div class="input-group">
+<label>Grado</label>
+<input type="text" placeholder="Ej. SI">
+</div>
+
+<div class="input-group">
+<label>Nombres</label>
+<input type="text">
+</div>
+
+<div class="input-group">
+<label>Apellidos</label>
+<input type="text">
+</div>
+
+<div class="input-group">
+<label>Cédula</label>
+<input type="text">
+</div>
+
+<div class="input-group">
+<label>CAI</label>
+<input type="text">
+</div>
+
+<div class="input-group">
+<label>Fecha Inicio</label>
+<input type="date">
+</div>
+
+<div class="input-group">
+<label>Fecha Final</label>
+<input type="date">
+</div>
+
+<div class="input-group">
+<label>Días</label>
+<input type="number">
+</div>
+
+<div class="input-group">
+<label>Entidad de Salud</label>
+<input type="text">
+</div>
+
+<div class="input-group">
+<label>Número de Orden</label>
+<input type="text">
+</div>
+
+<div class="input-group">
+<label>Adjuntar Excusa</label>
+<input type="file">
+</div>
+
+<button type="submit">
+Guardar Excusa
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}
