@@ -1,67 +1,56 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Control de Personal Excusado</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
 
 <body class="login-page">
 
-<div class="login-container">
+    <div class="login-container">
 
-    <div class="login-logo">
-
-        🚓
-
-    </div>
-
-    <h1>Sistema de Control de Personal Excusado</h1>
-
-    <p>Policía Metropolitana de Bogotá</p>
-
-    <form method="POST">
-
-        <div class="input-group">
-
-            <label>Cédula</label>
-
-            <input type="text" name="usuario" placeholder="Ingrese la cédula" required>
-
+        <div class="login-logo">
+            <img src="{{ url_for('static', filename='img/logo-policia.png') }}" alt="Policía Nacional">
         </div>
 
-        <div class="input-group">
+        <h1>Sistema de Control de Personal Excusado</h1>
 
-            <label>Contraseña</label>
+        <p>Policía Metropolitana de Bogotá</p>
 
-            <input type="password" name="password" placeholder="Ingrese la contraseña" required>
+        <form method="POST">
 
+            <div class="input-group">
+                <label>Cédula</label>
+                <input
+                    type="text"
+                    name="usuario"
+                    placeholder="Ingrese la cédula"
+                    required>
+            </div>
+
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Ingrese la contraseña"
+                    required>
+            </div>
+
+            <button type="submit">
+                Iniciar sesión
+            </button>
+
+        </form>
+
+        <div class="version">
+            Versión 1.0
         </div>
 
-        <button type="submit">
-
-            Iniciar sesión
-
-        </button>
-
-    </form>
-
-    <div class="version">
-
-        Versión 1.0
-
     </div>
-
-</div>
 
 </body>
-
 </html>
