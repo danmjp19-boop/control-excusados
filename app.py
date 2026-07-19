@@ -76,21 +76,20 @@ def usuarios():
 @app.route("/excusas", methods=["GET", "POST"])
 def excusas():
 
-    if archivo.filename != "":
-
-    imagen = Image.open(archivo)
-
-    texto = pytesseract.image_to_string(
-        imagen,
-        lang="spa"
-    )
-
-    return f"<pre>{texto}</pre>"
+    if request.method == "POST":
+        archivo = request.files["excusa"]
 
         if archivo.filename != "":
-            return "Imagen recibida correctamente"
+            imagen = Image.open(archivo)
+
+            texto = pytesseract.image_to_string(
+                imagen,
+                lang="spa"
+            )
+
+            return f"<pre>{texto}</pre>"
 
     return render_template("excusas.html")
-    
+
 if __name__ == "__main__":
     app.run(debug=True)
