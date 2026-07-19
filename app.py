@@ -71,8 +71,15 @@ def usuarios():
     usuarios = Usuario.query.all()
     return render_template("usuarios.html", usuarios=usuarios)
 
-@app.route("/excusas")
+@app.route("/excusas", methods=["GET", "POST"])
 def excusas():
+
+    if request.method == "POST":
+        archivo = request.files["excusa"]
+
+        if archivo.filename != "":
+            return "Imagen recibida correctamente"
+
     return render_template("excusas.html")
     
 if __name__ == "__main__":
