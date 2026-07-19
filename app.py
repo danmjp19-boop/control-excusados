@@ -1,6 +1,8 @@
 import os
 from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
+from PIL import Image
+import pytesseract
 
 app = Flask(__name__)
 app.secret_key = "control_excusados_2026"
@@ -74,8 +76,16 @@ def usuarios():
 @app.route("/excusas", methods=["GET", "POST"])
 def excusas():
 
-    if request.method == "POST":
-        archivo = request.files["excusa"]
+    if archivo.filename != "":
+
+    imagen = Image.open(archivo)
+
+    texto = pytesseract.image_to_string(
+        imagen,
+        lang="spa"
+    )
+
+    return f"<pre>{texto}</pre>"
 
         if archivo.filename != "":
             return "Imagen recibida correctamente"
