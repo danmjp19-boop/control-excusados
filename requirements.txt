@@ -6,3 +6,4 @@ pytesseract
 Pillow
 opencv-python-headless
 numpy
+google-cloud-vision
