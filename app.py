@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from PIL import Image
+import pytesseract
 import json
 from google.cloud import vision
 from google.oauth2 import service_account
