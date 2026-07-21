@@ -87,14 +87,15 @@ def excusas():
 
             contenido = archivo.read()
 
-            credentials = service_account.Credentials.from_service_account_file(
-    "/etc/secrets/google-vision.json"
+            import json
+
+info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+
+credentials = service_account.Credentials.from_service_account_info(info)
+
+cliente = vision.ImageAnnotatorClient(
+    credentials=credentials
 )
-
-            cliente = vision.ImageAnnotatorClient(
-                credentials=credentials
-            )
-
             imagen = vision.Image(content=contenido)
 
             respuesta = cliente.text_detection(image=imagen)
