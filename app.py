@@ -88,8 +88,8 @@ def excusas():
             contenido = archivo.read()
 
             credentials = service_account.Credentials.from_service_account_file(
-                "google-vision.json"
-            )
+    "/etc/secrets/google-vision.json"
+)
 
             cliente = vision.ImageAnnotatorClient(
                 credentials=credentials
