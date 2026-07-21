@@ -80,19 +80,30 @@ def usuarios():
 def excusas():
 
     if request.method == "POST":
+
         archivo = request.files["excusa"]
 
         if archivo.filename != "":
-            imagen = Image.open(archivo)
 
-            texto = pytesseract.image_to_string(
-                imagen,
-                lang="spa"
+            contenido = archivo.read()
+
+            credentials = service_account.Credentials.from_service_account_file(
+                "google-vision.json"
             )
+
+            cliente = vision.ImageAnnotatorClient(
+                credentials=credentials
+            )
+
+            imagen = vision.Image(content=contenido)
+
+            respuesta = cliente.text_detection(image=imagen)
+
+            texto = respuesta.full_text_annotation.text
 
             return f"<pre>{texto}</pre>"
 
     return render_template("excusas.html")
 
-if __name__ == "__main__":
+lif __name__ == "__main__":
     app.run(debug=True)
