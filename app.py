@@ -105,5 +105,5 @@ def excusas():
 
     return render_template("excusas.html")
 
-lif __name__ == "__main__":
+if __name__ == "__main__":
     app.run(debug=True)
