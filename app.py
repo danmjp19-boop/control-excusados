@@ -61,13 +61,13 @@ def extraer_datos(texto):
     }
 
     m = re.search(
-    r"CC\s+(\d+)\s+([A-ZÁÉÍÓÚÑ ]+)",
-    texto
-)
+        r"CC\s+(\d+)\s+([A-ZÁÉÍÓÚÑ ]+)",
+        texto
+    )
 
-if m:
-    datos["cedula"] = m.group(1)
-    datos["nombre"] = m.group(2).strip()
+    if m:
+        datos["cedula"] = m.group(1)
+        datos["nombre"] = m.group(2).strip()
 
     # Orden
     m = re.search(r"No\.\s*Orden\s*\n?(\d+)", texto)
@@ -90,6 +90,7 @@ if m:
         datos["dias"] = m.group(1)
 
     return datos
+
 
 @app.route("/", methods=["GET", "POST"])
 def login():
