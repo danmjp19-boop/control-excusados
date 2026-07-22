@@ -61,10 +61,15 @@ def extraer_datos(texto):
     }
 
     # Cédula y nombre
-    m = re.search(r"CC\s+(\d+)\s+([A-ZÁÉÍÓÚÑ ]+)", texto)
-    if m:
-        datos["cedula"] = m.group(1)
-        datos["nombre"] = m.group(2).strip()
+m = re.search(
+    r"CC\s+(\d+)\s+([A-ZÁÉÍÓÚÑ ]+?)\s+Tipo de Plan",
+    texto,
+    re.DOTALL
+)
+
+if m:
+    datos["cedula"] = m.group(1)
+    datos["nombre"] = " ".join(m.group(2).split())
 
     # Orden
     m = re.search(r"No\.\s*Orden\s*\n?(\d+)", texto)
