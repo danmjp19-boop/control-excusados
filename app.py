@@ -6,6 +6,8 @@ import pytesseract
 import json
 from google.cloud import vision
 from google.oauth2 import service_account
+import re
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "control_excusados_2026"
@@ -103,9 +105,44 @@ def excusas():
 
             texto = respuesta.full_text_annotation.text
 
-            return f"<pre>{texto}</pre>"
+datos = extraer_datos(texto)
+
+return datos
 
     return render_template("excusas.html")
+
+def extraer_datos(texto):
+    datos = {
+        "nombre": "",
+        "cedula": "",
+        "orden": "",
+        "fecha_inicio": "",
+        "fecha_final": "",
+        "dias": ""
+    }
+
+    # Orden
+    m = re.search(r"Orden[:\s]*([0-9]+)", texto, re.IGNORECASE)
+    if m:
+        datos["orden"] = m.group(1)
+
+    # Cédula
+    m = re.search(r"C[ée]dula[:\s]*([0-9]+)", texto, re.IGNORECASE)
+    if m:
+        datos["cedula"] = m.group(1)
+
+    # Días
+    m = re.search(r"(\d+)\s*d[ií]as", texto, re.IGNORECASE)
+    if m:
+        datos["dias"] = m.group(1)
+
+    # Fechas
+    fechas = re.findall(r"\d{2}/\d{2}/\d{4}", texto)
+    if len(fechas) >= 2:
+        datos["fecha_inicio"] = fechas[0]
+        datos["fecha_final"] = fechas[1]
+
+    return datos
 
 if __name__ == "__main__":
     app.run(debug=True)
