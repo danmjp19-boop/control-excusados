@@ -60,27 +60,31 @@ def extraer_datos(texto):
         "dias": ""
     }
 
+    # Cédula y nombre
+    m = re.search(r"CC\s+(\d+)\s+([A-ZÁÉÍÓÚÑ ]+)", texto)
+    if m:
+        datos["cedula"] = m.group(1)
+        datos["nombre"] = m.group(2).strip()
+
     # Orden
-    m = re.search(r"Orden[:\s]*([0-9]+)", texto, re.IGNORECASE)
+    m = re.search(r"No\.\s*Orden\s*\n?(\d+)", texto)
     if m:
         datos["orden"] = m.group(1)
 
-    # Cédula
-    m = re.search(r"C[ée]dula[:\s]*([0-9]+)", texto, re.IGNORECASE)
+    # Fecha inicial
+    m = re.search(r"Fecha Inicial\s+(\d{4}/\d{2}/\d{2})", texto)
     if m:
-        datos["cedula"] = m.group(1)
+        datos["fecha_inicio"] = m.group(1)
 
-    # Días
-    m = re.search(r"(\d+)\s*d[ií]as", texto, re.IGNORECASE)
+    # Fecha final
+    m = re.search(r"Fecha Final\s+(\d{4}/\d{2}/\d{2})", texto)
+    if m:
+        datos["fecha_final"] = m.group(1)
+
+    # Número de días
+    m = re.search(r"Número de días incapacidad\s*\n?(\d+)", texto)
     if m:
         datos["dias"] = m.group(1)
-
-    # Fechas
-    fechas = re.findall(r"\d{2}/\d{2}/\d{4}", texto)
-
-    if len(fechas) >= 2:
-        datos["fecha_inicio"] = fechas[0]
-        datos["fecha_final"] = fechas[1]
 
     return datos
 
