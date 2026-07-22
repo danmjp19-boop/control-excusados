@@ -1,13 +1,11 @@
 import os
-from flask import Flask, render_template, request, redirect, session
-from flask_sqlalchemy import SQLAlchemy
-from PIL import Image
-import pytesseract
 import json
+import re
+
+from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 from google.cloud import vision
 from google.oauth2 import service_account
-import re
-from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "control_excusados_2026"
@@ -32,86 +30,27 @@ class Usuario(db.Model):
 
 
 with app.app_context():
-    db.drop_all()
     db.create_all()
 
-    if Usuario.query.filter_by(cedula="1000000000").first() is None:
+    if Usuario.query.filter_by(cedula="CAI ANDES").first() is None:
         admin = Usuario(
-    grado="SI",
-    nombres="Administrador",
-    apellidos="Sistema",
-    cedula="CAI ANDES",
-    password="123",
-    rol="Administrador",
-    unidad="ESTACION SUBA",
-    cai="CAI ANDES",
-    estado="Activo"
-)
-        
+            grado="SI",
+            nombres="Administrador",
+            apellidos="Sistema",
+            cedula="CAI ANDES",
+            password="123",
+            rol="Administrador",
+            unidad="ESTACION SUBA",
+            cai="CAI ANDES",
+            estado="Activo"
+        )
+
         db.session.add(admin)
         db.session.commit()
 
 
-@app.route("/", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        usuario = request.form["usuario"]
-        password = request.form["password"]
-
-        user = Usuario.query.filter_by(
-            cedula=usuario,
-            password=password
-        ).first()
-
-        if user:
-            return render_template(
-                "admin.html",
-                usuario=user.nombres
-            )
-
-        return "Usuario o contraseña incorrectos"
-
-    return render_template("login.html")
-
-@app.route("/usuarios")
-def usuarios():
-    usuarios = Usuario.query.all()
-    return render_template("usuarios.html", usuarios=usuarios)
-
-@app.route("/excusas", methods=["GET", "POST"])
-def excusas():
-
-    if request.method == "POST":
-
-        archivo = request.files["excusa"]
-
-        if archivo.filename != "":
-
-            contenido = archivo.read()
-
-            info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
-
-            credentials = service_account.Credentials.from_service_account_info(
-                info
-            )
-
-            cliente = vision.ImageAnnotatorClient(
-                credentials=credentials
-            )
-
-            imagen = vision.Image(content=contenido)
-
-            respuesta = cliente.text_detection(image=imagen)
-
-            texto = respuesta.full_text_annotation.text
-
-datos = extraer_datos(texto)
-
-return datos
-
-    return render_template("excusas.html")
-
 def extraer_datos(texto):
+
     datos = {
         "nombre": "",
         "cedula": "",
@@ -138,11 +77,88 @@ def extraer_datos(texto):
 
     # Fechas
     fechas = re.findall(r"\d{2}/\d{2}/\d{4}", texto)
+
     if len(fechas) >= 2:
         datos["fecha_inicio"] = fechas[0]
         datos["fecha_final"] = fechas[1]
 
     return datos
+
+
+@app.route("/", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        usuario = request.form["usuario"]
+        password = request.form["password"]
+
+        user = Usuario.query.filter_by(
+            cedula=usuario,
+            password=password
+        ).first()
+
+        if user:
+            return render_template(
+                "admin.html",
+                usuario=user.nombres
+            )
+
+        return "Usuario o contraseña incorrectos"
+
+    return render_template("login.html")
+
+
+@app.route("/usuarios")
+def usuarios():
+
+    usuarios = Usuario.query.all()
+
+    return render_template(
+        "usuarios.html",
+        usuarios=usuarios
+    )
+
+
+@app.route("/excusas", methods=["GET", "POST"])
+def excusas():
+
+    if request.method == "POST":
+
+        archivo = request.files["excusa"]
+
+        if archivo.filename != "":
+
+            contenido = archivo.read()
+
+            info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+
+            credentials = service_account.Credentials.from_service_account_info(info)
+
+            cliente = vision.ImageAnnotatorClient(
+                credentials=credentials
+            )
+
+            imagen = vision.Image(content=contenido)
+
+            respuesta = cliente.text_detection(image=imagen)
+
+            texto = respuesta.full_text_annotation.text
+
+            datos = extraer_datos(texto)
+
+            return f"""
+            <h2>Datos encontrados</h2>
+            <pre>{datos}</pre>
+
+            <hr>
+
+            <h2>Texto completo</h2>
+            <pre>{texto}</pre>
+            """
+
+    return render_template("excusas.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
