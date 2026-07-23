@@ -137,6 +137,29 @@ def usuarios():
         usuarios=usuarios
     )
 
+@app.route("/crear_usuario", methods=["POST"])
+def crear_usuario():
+
+    if Usuario.query.filter_by(cedula=request.form["cedula"]).first():
+        return "Ya existe un usuario con esa cédula"
+
+    nuevo = Usuario(
+        grado=request.form["grado"],
+        nombres=request.form["nombres"],
+        apellidos=request.form["apellidos"],
+        cedula=request.form["cedula"],
+        password=request.form["password"],
+        rol=request.form["rol"],
+        unidad=request.form["unidad"],
+        cai=request.form["cai"],
+        estado="Activo"
+    )
+
+    db.session.add(nuevo)
+    db.session.commit()
+
+    return redirect(url_for("usuarios"))
+
 
 @app.route("/excusas", methods=["GET", "POST"])
 def excusas():
