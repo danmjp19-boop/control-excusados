@@ -43,7 +43,7 @@ class Excusa(db.Model):
 with app.app_context():
     db.create_all()
 
-    if Usuario.query.filter_by(cedula="CAI ANDES").first() is None:
+    if Usuario.query.filter_by(cedula="TAHUM-E11").first() is None:
         admin = Usuario(
     grado="SI",
     nombres="Administrador",
