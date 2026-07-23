@@ -28,6 +28,16 @@ class Usuario(db.Model):
     cai = db.Column(db.String(100), nullable=False)
     estado = db.Column(db.String(20), default="Activo")
 
+class Excusa(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(150), nullable=False)
+    cedula = db.Column(db.String(20), nullable=False)
+    orden = db.Column(db.String(30))
+    fecha_inicio = db.Column(db.String(20))
+    fecha_final = db.Column(db.String(20))
+    dias = db.Column(db.String(10))
+    fecha_registro = db.Column(db.DateTime, default=db.func.now())
+
 
 with app.app_context():
     db.create_all()
