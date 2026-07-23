@@ -154,15 +154,10 @@ def excusas():
 
             datos = extraer_datos(texto)
 
-            return f"""
-            <h2>Datos encontrados</h2>
-            <pre>{datos}</pre>
-
-            <hr>
-
-            <h2>Texto completo</h2>
-            <pre>{texto}</pre>
-            """
+            return render_template(
+    "resultado.html",
+    datos=datos
+)
 
     return render_template("excusas.html")
 
