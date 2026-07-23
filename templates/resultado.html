@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nueva Excusa Médica</title>
 
+<style>
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:25px;
+}
+
+.contenedor{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+
+h2{
+    text-align:center;
+    color:#0b5ed7;
+    margin-bottom:30px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    font-size:16px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin-bottom:18px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    background:#198754;
+    color:white;
+    padding:15px;
+    font-size:18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#157347;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="contenedor">
+
+<h2>Nueva Excusa Médica</h2>
+
+<form action="/guardar_excusa" method="POST">
+
+<label>👤 Nombre completo</label>
+<input type="text" name="nombre" value="{{ datos.nombre }}">
+
+<label>🪪 Cédula</label>
+<input type="text" name="cedula" value="{{ datos.cedula }}">
+
+<label>📄 Número de orden</label>
+<input type="text" name="orden" value="{{ datos.orden }}">
+
+<label>📅 Fecha inicial</label>
+<input type="date" name="fecha_inicio" value="{{ datos.fecha_inicio }}">
+
+<label>📅 Fecha final</label>
+<input type="date" name="fecha_final" value="{{ datos.fecha_final }}">
+
+<label>📆 Número de días</label>
+<input type="number" name="dias" value="{{ datos.dias }}">
+
+<button type="submit">
+💾 Guardar Excusa
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>
