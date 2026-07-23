@@ -188,6 +188,16 @@ def guardar_excusa():
 
     return "Excusa guardada correctamente."
 
+@app.route("/lista_excusas")
+def lista_excusas():
+
+    excusas = Excusa.query.order_by(Excusa.id.desc()).all()
+
+    return render_template(
+        "lista_excusas.html",
+        excusas=excusas
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
