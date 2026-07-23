@@ -98,7 +98,7 @@ placeholder="🔍 Buscar por nombre o cédula..."
 onkeyup="filtrar()">
 
 <div class="total" id="contador">
-🔎 Total encontrados: 0
+🔎 Total encontrados: {{ excusas|length }}
 </div>
 
 <table id="tabla">
@@ -149,7 +149,12 @@ for(let i=1;i<filas.length;i++){
 let nombre=filas[i].cells[1].textContent.toUpperCase();
 let cedula=filas[i].cells[2].textContent.toUpperCase();
 
-if(filtro!="" && (nombre.indexOf(filtro)>-1 || cedula.indexOf(filtro)>-1)){
+if(filtro==""){
+
+filas[i].style.display="";
+encontrados++;
+
+}else if(nombre.indexOf(filtro)>-1 || cedula.indexOf(filtro)>-1){
 
 filas[i].style.display="";
 encontrados++;
