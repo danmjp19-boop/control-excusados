@@ -150,12 +150,9 @@ def excusas():
             contenido = archivo.read()
 
             info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
-
             credentials = service_account.Credentials.from_service_account_info(info)
 
-            cliente = vision.ImageAnnotatorClient(
-                credentials=credentials
-            )
+            cliente = vision.ImageAnnotatorClient(credentials=credentials)
 
             imagen = vision.Image(content=contenido)
 
@@ -166,12 +163,11 @@ def excusas():
             datos = extraer_datos(texto)
 
             return render_template(
-    "resultado.html",
-    datos=datos
-)
+                "resultado.html",
+                datos=datos
+            )
 
-    from flask import redirect, url_for
-
+         return render_template("excusas.html")
 @app.route("/guardar_excusa", methods=["POST"])
 def guardar_excusa():
 
