@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Excusas Registradas</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#f4f6f9;
+    margin:20px;
+}
+
+h2{
+    text-align:center;
+    color:#0b5ed7;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th{
+    background:#0b5ed7;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+
+tr:hover{
+    background:#f2f2f2;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Listado de Excusas</h2>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Nombre</th>
+<th>Cédula</th>
+<th>Orden</th>
+<th>Inicio</th>
+<th>Final</th>
+<th>Días</th>
+</tr>
+
+{% for e in excusas %}
+
+<tr>
+
+<td>{{ e.id }}</td>
+<td>{{ e.nombre }}</td>
+<td>{{ e.cedula }}</td>
+<td>{{ e.orden }}</td>
+<td>{{ e.fecha_inicio }}</td>
+<td>{{ e.fecha_final }}</td>
+<td>{{ e.dias }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>
