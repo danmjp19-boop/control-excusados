@@ -10,20 +10,56 @@
 <style>
 
 body{
-    font-family:Arial;
+    font-family:Arial, Helvetica, sans-serif;
     background:#f4f6f9;
     margin:20px;
+}
+
+.contenedor{
+    max-width:1100px;
+    margin:auto;
+}
+
+.volver{
+    text-decoration:none;
+    color:#0b5ed7;
+    font-size:18px;
+    font-weight:bold;
+    display:inline-block;
+    margin-bottom:20px;
+}
+
+.volver:hover{
+    color:#084298;
 }
 
 h2{
     text-align:center;
     color:#0b5ed7;
+    margin-bottom:20px;
+}
+
+.buscador{
+    width:100%;
+    padding:12px;
+    font-size:16px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin-bottom:20px;
+    box-sizing:border-box;
+}
+
+.total{
+    margin-bottom:15px;
+    font-weight:bold;
+    color:#555;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
     background:white;
+    box-shadow:0 0 10px rgba(0,0,0,.10);
 }
 
 th{
@@ -48,9 +84,24 @@ tr:hover{
 
 <body>
 
+<div class="contenedor">
+
+<a href="/" class="volver">← Regresar</a>
+
 <h2>Listado de Excusas</h2>
 
-<table>
+<input
+type="text"
+id="buscar"
+class="buscador"
+placeholder="🔍 Buscar por nombre o cédula..."
+onkeyup="filtrar()">
+
+<div class="total">
+Total de excusas: {{ excusas|length }}
+</div>
+
+<table id="tabla">
 
 <tr>
 <th>ID</th>
@@ -79,6 +130,34 @@ tr:hover{
 {% endfor %}
 
 </table>
+
+</div>
+
+<script>
+
+function filtrar(){
+
+let input=document.getElementById("buscar");
+let filtro=input.value.toUpperCase();
+let tabla=document.getElementById("tabla");
+let filas=tabla.getElementsByTagName("tr");
+
+for(let i=1;i<filas.length;i++){
+
+let nombre=filas[i].cells[1].textContent.toUpperCase();
+let cedula=filas[i].cells[2].textContent.toUpperCase();
+
+if(nombre.indexOf(filtro)>-1 || cedula.indexOf(filtro)>-1){
+filas[i].style.display="";
+}else{
+filas[i].style.display="none";
+}
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
