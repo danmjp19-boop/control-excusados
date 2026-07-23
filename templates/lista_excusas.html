@@ -97,8 +97,8 @@ class="buscador"
 placeholder="🔍 Buscar por nombre o cédula..."
 onkeyup="filtrar()">
 
-<div class="total">
-Total de excusas: {{ excusas|length }}
+<div class="total" id="contador">
+🔎 Total encontrados: 0
 </div>
 
 <table id="tabla">
@@ -142,18 +142,27 @@ let filtro=input.value.toUpperCase();
 let tabla=document.getElementById("tabla");
 let filas=tabla.getElementsByTagName("tr");
 
+let encontrados=0;
+
 for(let i=1;i<filas.length;i++){
 
 let nombre=filas[i].cells[1].textContent.toUpperCase();
 let cedula=filas[i].cells[2].textContent.toUpperCase();
 
-if(nombre.indexOf(filtro)>-1 || cedula.indexOf(filtro)>-1){
+if(filtro!="" && (nombre.indexOf(filtro)>-1 || cedula.indexOf(filtro)>-1)){
+
 filas[i].style.display="";
+encontrados++;
+
 }else{
+
 filas[i].style.display="none";
+
 }
 
 }
+
+document.getElementById("contador").innerHTML="🔎 Total encontrados: "+encontrados;
 
 }
 
