@@ -169,7 +169,7 @@ def excusas():
     datos=datos
 )
 
-    return render_template("excusas.html")
+    from flask import redirect, url_for
 
 @app.route("/guardar_excusa", methods=["POST"])
 def guardar_excusa():
