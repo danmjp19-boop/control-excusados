@@ -45,16 +45,16 @@ with app.app_context():
 
     if Usuario.query.filter_by(cedula="CAI ANDES").first() is None:
         admin = Usuario(
-            grado="SI",
-            nombres="Administrador",
-            apellidos="Sistema",
-            cedula="TAHUM E-11",
-            password="Nueva321+",
-            rol="Administrador",
-            unidad="ESTACION SUBA",
-            cai="CAI ANDES",
-            estado="Activo"
-        )
+    grado="SI",
+    nombres="Administrador",
+    apellidos="Sistema",
+    cedula="TAHUM-E11",
+    password="Nueva321+",
+    rol="Administrador",
+    unidad="ESTACION DE POLICIA SUBA",
+    cai="CAI ANDES",
+    estado="Activo"
+)
 
         db.session.add(admin)
         db.session.commit()
