@@ -23,6 +23,19 @@ body{
     box-shadow:0 0 15px rgba(0,0,0,.15);
 }
 
+.volver{
+    text-decoration:none;
+    color:#0b5ed7;
+    font-size:18px;
+    font-weight:bold;
+    display:inline-block;
+    margin-bottom:20px;
+}
+
+.volver:hover{
+    color:#084298;
+}
+
 h2{
     text-align:center;
     color:#0b5ed7;
@@ -54,6 +67,7 @@ button{
     border:none;
     border-radius:8px;
     cursor:pointer;
+    margin-bottom:12px;
 }
 
 button:hover{
@@ -67,6 +81,8 @@ button:hover{
 <body>
 
 <div class="contenedor">
+
+<a href="/excusas" class="volver">← Regresar</a>
 
 <h2>Nueva Excusa Médica</h2>
 
@@ -92,16 +108,15 @@ button:hover{
 
 <button type="submit">
 💾 Guardar Excusa
+</button>
 
-   <br><br>
+</form>
 
-<a href="/lista_excusas">
+<a href="/lista_excusas" style="text-decoration:none;">
     <button type="button">
         📋 Ver Listado
     </button>
 </a>
-
-</form>
 
 </div>
 
