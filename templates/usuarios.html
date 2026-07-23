@@ -8,7 +8,7 @@
 
     <h1>Gestión de Usuarios</h1>
 
-    <button class="btn-nuevo">
+    <button class="btn-nuevo" onclick="document.getElementById('nuevoUsuario').style.display='block'">
         ➕ Nuevo Usuario
     </button>
 
@@ -20,8 +20,10 @@
 
     <input
         type="text"
+        id="buscar"
         placeholder="🔍 Buscar usuario..."
-        style="width:300px;padding:10px;margin-bottom:20px;">
+        style="width:300px;padding:10px;margin-bottom:20px;"
+        onkeyup="buscarUsuarios()">
 
     <table width="100%" cellspacing="0">
 
@@ -37,22 +39,96 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody id="tablaUsuarios">
+
+            {% for usuario in usuarios %}
 
             <tr>
-                <td>1</td>
-                <td>SI</td>
-                <td>Administrador</td>
-                <td>CAI Andes</td>
-                <td>Administrador</td>
-                <td>🟢 Activo</td>
-                <td>✏️ Editar | 🔒 Desactivar</td>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.grado }}</td>
+                <td>{{ usuario.nombres }} {{ usuario.apellidos }}</td>
+                <td>{{ usuario.cai }}</td>
+                <td>{{ usuario.rol }}</td>
+
+                <td>
+                    {% if usuario.estado == "Activo" %}
+                        🟢 Activo
+                    {% else %}
+                        🔴 Inactivo
+                    {% endif %}
+                </td>
+
+                <td>
+                    ✏️ Editar |
+                    {% if usuario.estado == "Activo" %}
+                        🔒 Desactivar
+                    {% else %}
+                        🔓 Activar
+                    {% endif %}
+                </td>
+
             </tr>
+
+            {% endfor %}
 
         </tbody>
 
     </table>
 
 </div>
+
+<div id="nuevoUsuario" style="display:none;position:fixed;top:5%;left:50%;transform:translateX(-50%);background:white;padding:25px;border-radius:10px;width:500px;box-shadow:0 0 20px rgba(0,0,0,.3);z-index:999;">
+
+    <h2>Nuevo Usuario</h2>
+
+    <form method="POST" action="/crear_usuario">
+
+        <input type="text" name="grado" placeholder="Grado" required style="width:100%;padding:10px;margin:5px 0;">
+
+        <input type="text" name="nombres" placeholder="Nombres" required style="width:100%;padding:10px;margin:5px 0;">
+
+        <input type="text" name="apellidos" placeholder="Apellidos" required style="width:100%;padding:10px;margin:5px 0;">
+
+        <input type="text" name="cedula" placeholder="Cédula" required style="width:100%;padding:10px;margin:5px 0;">
+
+        <input type="password" name="password" placeholder="Contraseña" required style="width:100%;padding:10px;margin:5px 0;">
+
+        <input type="text" name="rol" placeholder="Rol" required style="width:100%;padding:10px;margin:5px 0;">
+
+        <input type="text" name="unidad" placeholder="Unidad" required style="width:100%;padding:10px;margin:5px 0;">
+
+        <input type="text" name="cai" placeholder="CAI" required style="width:100%;padding:10px;margin:5px 0;">
+
+        <br><br>
+
+        <button type="submit">💾 Guardar</button>
+
+        <button type="button" onclick="document.getElementById('nuevoUsuario').style.display='none'">
+            Cancelar
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+function buscarUsuarios(){
+
+    let filtro = document.getElementById("buscar").value.toLowerCase();
+
+    let filas = document.querySelectorAll("#tablaUsuarios tr");
+
+    filas.forEach(function(fila){
+
+        let texto = fila.innerText.toLowerCase();
+
+        fila.style.display = texto.includes(filtro) ? "" : "none";
+
+    });
+
+}
+
+</script>
 
 {% endblock %}
