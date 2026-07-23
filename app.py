@@ -2,10 +2,11 @@ import os
 import json
 import re
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from google.cloud import vision
 from google.oauth2 import service_account
+
 
 app = Flask(__name__)
 app.secret_key = "control_excusados_2026"
@@ -186,7 +187,7 @@ def guardar_excusa():
     db.session.add(excusa)
     db.session.commit()
 
-    return "Excusa guardada correctamente."
+    return redirect(url_for("excusas"))
 
 @app.route("/lista_excusas")
 def lista_excusas():
