@@ -167,7 +167,7 @@ def excusas():
                 datos=datos
             )
 
-         return render_template("excusas.html")
+    return render_template("excusas.html")
 @app.route("/guardar_excusa", methods=["POST"])
 def guardar_excusa():
 
