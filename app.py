@@ -171,6 +171,23 @@ def excusas():
 
     return render_template("excusas.html")
 
+@app.route("/guardar_excusa", methods=["POST"])
+def guardar_excusa():
+
+    excusa = Excusa(
+        nombre=request.form["nombre"],
+        cedula=request.form["cedula"],
+        orden=request.form["orden"],
+        fecha_inicio=request.form["fecha_inicio"],
+        fecha_final=request.form["fecha_final"],
+        dias=request.form["dias"]
+    )
+
+    db.session.add(excusa)
+    db.session.commit()
+
+    return "Excusa guardada correctamente."
+
 
 if __name__ == "__main__":
     app.run(debug=True)
