@@ -273,6 +273,25 @@ def eliminar_excusa(id):
 
     return redirect(url_for("lista_excusas"))
 
+@app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
+def editar_excusa(id):
+
+    excusa = Excusa.query.get_or_404(id)
+
+    if request.method == "POST":
+        excusa.nombre = request.form["nombre"]
+        excusa.cedula = request.form["cedula"]
+        excusa.orden = request.form["orden"]
+        excusa.fecha_inicio = request.form["fecha_inicio"]
+        excusa.fecha_final = request.form["fecha_final"]
+        excusa.dias = request.form["dias"]
+
+        db.session.commit()
+
+        return redirect(url_for("lista_excusas"))
+
+    return render_template("editar_excusa.html", excusa=excusa)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
