@@ -60,12 +60,20 @@
 
                 <td>
                     <a href="/editar_usuario/{{ usuario.id }}">✏️ Editar</a> |
-                    {% if usuario.estado == "Activo" %}
-                        🔒 Desactivar
-                    {% else %}
-                        🔓 Activar
-                    {% endif %}
-                </td>
+                    
+
+
+<a href="/editar_usuario/{{ usuario.id }}">
+✏️ Editar
+</a> |
+
+<a href="/eliminar_usuario/{{ usuario.id }}"
+onclick="return confirm('¿Eliminar este usuario?')">
+🗑️ Eliminar
+</a>
+
+</td>
+                
 
             </tr>
 
