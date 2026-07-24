@@ -170,6 +170,31 @@ def crear_usuario():
 
     return redirect(url_for("usuarios"))
 
+@app.route("/editar_usuario/<int:id>", methods=["GET", "POST"])
+def editar_usuario(id):
+
+    usuario = Usuario.query.get_or_404(id)
+
+    if request.method == "POST":
+
+        usuario.grado = request.form["grado"]
+        usuario.nombres = request.form["nombres"]
+        usuario.apellidos = request.form["apellidos"]
+        usuario.cedula = request.form["cedula"]
+        usuario.password = request.form["password"]
+        usuario.rol = request.form["rol"]
+        usuario.unidad = request.form["unidad"]
+        usuario.cai = request.form["cai"]
+
+        db.session.commit()
+
+        return redirect(url_for("usuarios"))
+
+    return render_template(
+        "editar_usuario.html",
+        usuario=usuario
+    )
+
 
 @app.route("/excusas", methods=["GET", "POST"])
 def excusas():
