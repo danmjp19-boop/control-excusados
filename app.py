@@ -263,6 +263,16 @@ def lista_excusas():
         excusas=excusas
     )
 
+@app.route("/eliminar_excusa/<int:id>")
+def eliminar_excusa(id):
+
+    excusa = Excusa.query.get_or_404(id)
+
+    db.session.delete(excusa)
+    db.session.commit()
+
+    return redirect(url_for("lista_excusas"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
