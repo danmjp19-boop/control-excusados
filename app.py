@@ -43,20 +43,30 @@ class Excusa(db.Model):
 with app.app_context():
     db.create_all()
 
-    if Usuario.query.filter_by(cedula="TAHUM-E11").first() is None:
+    admins = Usuario.query.filter_by(cedula="TAHUM-E11").all()
+
+    if len(admins) == 0:
+
         admin = Usuario(
-    grado="SI",
-    nombres="Administrador",
-    apellidos="Sistema",
-    cedula="TAHUM-E11",
-    password="Nueva321+",
-    rol="Administrador",
-    unidad="ESTACION DE POLICIA SUBA",
-    cai="CAI ANDES",
-    estado="Activo"
-)
+            grado="SI",
+            nombres="Administrador",
+            apellidos="Sistema",
+            cedula="TAHUM-E11",
+            password="Nueva321+",
+            rol="Administrador",
+            unidad="ESTACION DE POLICIA SUBA",
+            cai="CAI ANDES",
+            estado="Activo"
+        )
 
         db.session.add(admin)
+        db.session.commit()
+
+    elif len(admins) > 1:
+
+        for usuario in admins[1:]:
+            db.session.delete(usuario)
+
         db.session.commit()
 
 
