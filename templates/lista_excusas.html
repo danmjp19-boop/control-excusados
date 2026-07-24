@@ -113,6 +113,7 @@ onkeyup="filtrar()">
 <th>Inicio</th>
 <th>Final</th>
 <th>Días</th>
+<th>Acciones</th>
 </tr>
 
 {% for e in excusas %}
@@ -126,6 +127,14 @@ onkeyup="filtrar()">
 <td>{{ e.fecha_inicio }}</td>
 <td>{{ e.fecha_final }}</td>
 <td>{{ e.dias }}</td>
+<td>
+    <a href="/editar_excusa/{{ e.id }}">✏️ Editar</a>
+    |
+    <a href="/eliminar_excusa/{{ e.id }}"
+       onclick="return confirm('¿Seguro que desea eliminar esta excusa?')">
+       🗑️ Eliminar
+    </a>
+</td>
 
 </tr>
 
