@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block content %}
+
+<h1>Editar Usuario</h1>
+
+<div class="card">
+
+<form method="POST">
+
+    <input type="text" name="grado" value="{{ usuario.grado }}" required style="width:100%;padding:10px;margin:8px 0;">
+
+    <input type="text" name="nombres" value="{{ usuario.nombres }}" required style="width:100%;padding:10px;margin:8px 0;">
+
+    <input type="text" name="apellidos" value="{{ usuario.apellidos }}" required style="width:100%;padding:10px;margin:8px 0;">
+
+    <input type="text" name="cedula" value="{{ usuario.cedula }}" required style="width:100%;padding:10px;margin:8px 0;">
+
+    <input type="text" name="password" value="{{ usuario.password }}" required style="width:100%;padding:10px;margin:8px 0;">
+
+    <input type="text" name="rol" value="{{ usuario.rol }}" required style="width:100%;padding:10px;margin:8px 0;">
+
+    <input type="text" name="unidad" value="{{ usuario.unidad }}" required style="width:100%;padding:10px;margin:8px 0;">
+
+    <input type="text" name="cai" value="{{ usuario.cai }}" required style="width:100%;padding:10px;margin:8px 0;">
+
+    <br>
+
+    <button type="submit">💾 Guardar Cambios</button>
+
+    <a href="/usuarios">
+        <button type="button">Cancelar</button>
+    </a>
+
+</form>
+
+</div>
+
+{% endblock %}
