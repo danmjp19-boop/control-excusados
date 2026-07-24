@@ -195,6 +195,16 @@ def editar_usuario(id):
         usuario=usuario
     )
 
+@app.route("/eliminar_usuario/<int:id>")
+def eliminar_usuario(id):
+
+    usuario = Usuario.query.get_or_404(id)
+
+    db.session.delete(usuario)
+    db.session.commit()
+
+    return redirect(url_for("usuarios"))
+
 
 @app.route("/excusas", methods=["GET", "POST"])
 def excusas():
