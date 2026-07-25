@@ -128,8 +128,19 @@ onkeyup="filtrar()">
 <td>{{ e.fecha_inicio }}</td>
 <td>{{ e.fecha_final }}</td>
 <td>{{ e.dias }}</td>
-<td>{{ e.dias_restantes }}</td>
 <td>
+    {% if e.dias_restantes == "Finalizada" %}
+        <span style="color:#dc3545;font-weight:bold;">🔴 Finalizada</span>
+
+    {% elif e.dias_restantes == "Finaliza hoy" %}
+        <span style="color:#fd7e14;font-weight:bold;">🟠 Finaliza hoy</span>
+
+    {% else %}
+        <span style="color:#198754;font-weight:bold;">
+            🟢 {{ e.dias_restantes }} días
+        </span>
+    {% endif %}
+</td>
     <a href="/editar_excusa/{{ e.id }}">✏️ Editar</a>
     |
     <a href="/eliminar_excusa/{{ e.id }}"
