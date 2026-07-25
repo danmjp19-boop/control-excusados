@@ -262,24 +262,20 @@ def lista_excusas():
 
     hoy = datetime.now().date()
 
-    for excusa in excusas:
+    for e in excusas:
         try:
-            fecha_final = datetime.strptime(
-                excusa.fecha_final,
-                "%Y-%m-%d"
-            ).date()
-
+            fecha_final = datetime.strptime(e.fecha_final, "%Y-%m-%d").date()
             restantes = (fecha_final - hoy).days
 
             if restantes < 0:
-                excusa.dias_restantes = "Finalizada"
+                e.dias_restantes = "Finalizada"
             elif restantes == 0:
-                excusa.dias_restantes = "Finaliza hoy"
+                e.dias_restantes = "Finaliza hoy"
             else:
-                excusa.dias_restantes = restantes
+                e.dias_restantes = restantes
 
         except:
-            excusa.dias_restantes = "-"
+            e.dias_restantes = "-"
 
     return render_template(
         "lista_excusas.html",
