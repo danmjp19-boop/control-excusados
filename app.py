@@ -256,7 +256,30 @@ def guardar_excusa():
 @app.route("/lista_excusas")
 def lista_excusas():
 
+    from datetime import datetime
+
     excusas = Excusa.query.order_by(Excusa.id.desc()).all()
+
+    hoy = datetime.now().date()
+
+    for excusa in excusas:
+        try:
+            fecha_final = datetime.strptime(
+                excusa.fecha_final,
+                "%Y-%m-%d"
+            ).date()
+
+            restantes = (fecha_final - hoy).days
+
+            if restantes < 0:
+                excusa.dias_restantes = "Finalizada"
+            elif restantes == 0:
+                excusa.dias_restantes = "Finaliza hoy"
+            else:
+                excusa.dias_restantes = restantes
+
+        except:
+            excusa.dias_restantes = "-"
 
     return render_template(
         "lista_excusas.html",
