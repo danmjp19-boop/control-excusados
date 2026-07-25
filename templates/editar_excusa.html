@@ -1,1 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<title>Editar Excusa</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:20px;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f6f9;
+}
+
+.contenedor{
+    max-width:600px;
+    margin:30px auto;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.12);
+}
+
+h2{
+    text-align:center;
+    color:#0b5ed7;
+    margin-top:0;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-top:15px;
+    margin-bottom:6px;
+    color:#444;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.botones{
+    display:flex;
+    gap:10px;
+    margin-top:25px;
+}
+
+.guardar,
+.cancelar{
+    flex:1;
+    padding:13px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.guardar{
+    background:#0b5ed7;
+    color:white;
+}
+
+.cancelar{
+    background:#e5e5e5;
+    color:#333;
+    text-align:center;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <h2>✏️ Editar Excusa</h2>
+
+    <form method="POST">
+
+        <label>Nombre</label>
+        <input type="text" name="nombre"
+               value="{{ excusa.nombre }}" required>
+
+        <label>Cédula</label>
+        <input type="text" name="cedula"
+               value="{{ excusa.cedula }}" required>
+
+        <label>Orden</label>
+        <input type="text" name="orden"
+               value="{{ excusa.orden }}">
+
+        <label>Fecha de inicio</label>
+        <input type="date" name="fecha_inicio"
+               value="{{ excusa.fecha_inicio }}">
+
+        <label>Fecha final</label>
+        <input type="date" name="fecha_final"
+               value="{{ excusa.fecha_final }}">
+
+        <label>Días</label>
+        <input type="number" name="dias"
+               value="{{ excusa.dias }}">
+
+        <div class="botones">
+
+            <button type="submit" class="guardar">
+                💾 Guardar cambios
+            </button>
+
+            <a href="/lista_excusas" class="cancelar">
+                Cancelar
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
