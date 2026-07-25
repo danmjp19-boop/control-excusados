@@ -136,6 +136,10 @@ def login():
 
     return render_template("login.html")
 
+@app.route("/admin")
+def admin():
+    return render_template("admin.html")
+
 
 @app.route("/usuarios")
 def usuarios():
