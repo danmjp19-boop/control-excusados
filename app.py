@@ -138,7 +138,29 @@ def login():
 
 @app.route("/admin")
 def admin():
-    return render_template("admin.html")
+
+    from datetime import datetime
+
+    hoy = datetime.now().strftime("%Y-%m-%d")
+
+    total_usuarios = Usuario.query.count()
+    total_excusas = Excusa.query.count()
+
+    excusas_activas = Excusa.query.filter(
+        Excusa.fecha_final >= hoy
+    ).count()
+
+    vencen_hoy = Excusa.query.filter(
+        Excusa.fecha_final == hoy
+    ).count()
+
+    return render_template(
+        "admin.html",
+        total_usuarios=total_usuarios,
+        excusas_activas=excusas_activas,
+        vencen_hoy=vencen_hoy,
+        total_excusas=total_excusas
+    )
 
 
 @app.route("/usuarios")
