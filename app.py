@@ -581,6 +581,41 @@ def novedades():
         pendientes=pendientes
     )
 
+@app.route("/editar_novedad/<int:id>", methods=["GET", "POST"])
+def editar_novedad(id):
+
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("admin"))
+
+    novedad = Novedad.query.get_or_404(id)
+
+    if request.method == "POST":
+
+        novedad.comentario = request.form["comentario"].strip()
+
+        db.session.commit()
+
+        return redirect(url_for("novedades"))
+
+    return render_template(
+        "editar_novedad.html",
+        novedad=novedad
+    )
+
+
+@app.route("/eliminar_novedad/<int:id>")
+def eliminar_novedad(id):
+
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("admin"))
+
+    novedad = Novedad.query.get_or_404(id)
+
+    db.session.delete(novedad)
+    db.session.commit()
+
+    return redirect(url_for("novedades"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
