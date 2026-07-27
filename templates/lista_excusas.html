@@ -148,14 +148,25 @@ onkeyup="filtrar()">
 </td>
 
 <td>
-    <a href="/editar_excusa/{{ e.id }}">✏️ Editar</a>
+
+    <a href="/ver_excusa/{{ e.id }}" target="_blank">
+        📷 Ver
+    </a>
+
     |
+
+    <a href="/editar_excusa/{{ e.id }}">
+        ✏️ Editar
+    </a>
+
+    |
+
     <a href="/eliminar_excusa/{{ e.id }}"
        onclick="return confirm('¿Seguro que desea eliminar esta excusa?')">
-       🗑️ Eliminar
+        🗑️ Eliminar
     </a>
-</td>
 
+</td>
 </tr>
 
 {% endfor %}
