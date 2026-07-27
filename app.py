@@ -143,6 +143,14 @@ def login():
         ).first()
 
         if user:
+
+            # Guardamos los datos del usuario que inició sesión
+            session["usuario_id"] = user.id
+            session["usuario"] = user.cedula
+            session["nombre"] = user.nombres
+            session["rol"] = user.rol
+            session["cai"] = user.cai
+
             return redirect(url_for("admin"))
 
         return "Usuario o contraseña incorrectos"
