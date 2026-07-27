@@ -127,10 +127,7 @@ def login():
         ).first()
 
         if user:
-            return render_template(
-                "admin.html",
-                usuario=user.nombres
-            )
+    return redirect(url_for("admin"))
 
         return "Usuario o contraseña incorrectos"
 
