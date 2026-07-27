@@ -530,6 +530,20 @@ def crear_novedad(id):
         excusa=excusa
     )
 
+@app.route("/revisar_novedad/<int:id>")
+def revisar_novedad(id):
+
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("admin"))
+
+    novedad = Novedad.query.get_or_404(id)
+
+    novedad.estado = "Revisado"
+
+    db.session.commit()
+
+    return redirect(url_for("novedades"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
