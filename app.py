@@ -1,8 +1,9 @@
 import os
 import json
 import re
+import base64
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, Response
 from flask_sqlalchemy import SQLAlchemy
 from google.cloud import vision
 from google.oauth2 import service_account
@@ -38,10 +39,20 @@ class Excusa(db.Model):
     fecha_final = db.Column(db.String(20))
     dias = db.Column(db.String(10))
     fecha_registro = db.Column(db.DateTime, default=db.func.now())
-
+    imagen = db.Column(db.LargeBinary, nullable=True)
+    
 
 with app.app_context():
     db.create_all()
+
+        try:
+        db.session.execute(
+            db.text("ALTER TABLE excusa ADD COLUMN IF NOT EXISTS imagen BYTEA")
+        )
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print("Error creando columna imagen:", e)
 
     admins = Usuario.query.filter_by(cedula="TAHUM-E11").all()
 
@@ -240,6 +251,9 @@ def excusas():
 
             contenido = archivo.read()
 
+            # Guardar temporalmente la imagen
+            session["imagen_excusa"] = base64.b64encode(contenido).decode("utf-8")
+
             info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
             credentials = service_account.Credentials.from_service_account_info(info)
 
@@ -259,8 +273,17 @@ def excusas():
             )
 
     return render_template("excusas.html")
+
+
 @app.route("/guardar_excusa", methods=["POST"])
 def guardar_excusa():
+
+    imagen_guardada = session.pop("imagen_excusa", None)
+
+    if imagen_guardada:
+        imagen_bytes = base64.b64decode(imagen_guardada)
+    else:
+        imagen_bytes = None
 
     excusa = Excusa(
         nombre=request.form["nombre"],
@@ -268,13 +291,27 @@ def guardar_excusa():
         orden=request.form["orden"],
         fecha_inicio=request.form["fecha_inicio"],
         fecha_final=request.form["fecha_final"],
-        dias=request.form["dias"]
+        dias=request.form["dias"],
+        imagen=imagen_bytes
     )
 
     db.session.add(excusa)
     db.session.commit()
 
     return redirect(url_for("excusas"))
+
+@app.route("/ver_excusa/<int:id>")
+def ver_excusa(id):
+
+    excusa = Excusa.query.get_or_404(id)
+
+    if not excusa.imagen:
+        return "Esta excusa no tiene imagen guardada", 404
+
+    return Response(
+        excusa.imagen,
+        mimetype="image/jpeg"
+    )
 
 @app.route("/lista_excusas")
 def lista_excusas():
