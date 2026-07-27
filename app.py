@@ -342,6 +342,58 @@ def ver_excusa(id):
         mimetype="image/jpeg"
     )
 
+@app.route("/descargar_excel")
+def descargar_excel():
+
+    fecha_desde = request.args.get("desde")
+    fecha_hasta = request.args.get("hasta")
+
+    consulta = Excusa.query
+
+    if fecha_desde:
+        consulta = consulta.filter(Excusa.fecha_inicio >= fecha_desde)
+
+    if fecha_hasta:
+        consulta = consulta.filter(Excusa.fecha_inicio <= fecha_hasta)
+
+    excusas = consulta.order_by(Excusa.fecha_inicio.asc()).all()
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Reporte de Excusas"
+
+    ws.append([
+        "ID",
+        "Nombre",
+        "Cédula",
+        "Número de Orden",
+        "Fecha Inicial",
+        "Fecha Final",
+        "Número de Días"
+    ])
+
+    for e in excusas:
+        ws.append([
+            e.id,
+            e.nombre,
+            e.cedula,
+            e.orden,
+            e.fecha_inicio,
+            e.fecha_final,
+            e.dias
+        ])
+
+    archivo = BytesIO()
+    wb.save(archivo)
+    archivo.seek(0)
+
+    return send_file(
+        archivo,
+        as_attachment=True,
+        download_name="reporte_excusas.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
 @app.route("/lista_excusas")
 def lista_excusas():
 
