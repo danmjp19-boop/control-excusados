@@ -71,20 +71,38 @@
 
                 </td>
 
-                <td>
+    <td>
+
+    <a href="/ver_excusa/{{ n.excusa_id }}" target="_blank">
+        📷 Ver
+    </a>
+
+    |
+
+    <a href="/editar_novedad/{{ n.id }}">
+        ✏️ Editar
+    </a>
+
+    |
+
+    <a href="/eliminar_novedad/{{ n.id }}"
+       onclick="return confirm('¿Seguro que desea eliminar esta novedad?')">
+        🗑️ Eliminar
+    </a>
+
+    |
 
     {% if n.estado == "Pendiente" %}
 
         <a href="/revisar_novedad/{{ n.id }}"
-           onclick="return confirm('¿Marcar esta novedad como revisada?')"
-           style="color:#198754;font-weight:bold;text-decoration:none;">
+           onclick="return confirm('¿Marcar esta novedad como revisada?')">
             ✅ Marcar revisada
         </a>
 
     {% else %}
 
-        <span style="color:#777;">
-            Revisada
+        <span style="color:green;font-weight:bold;">
+            ✅ Revisada
         </span>
 
     {% endif %}
