@@ -2,6 +2,8 @@ import os
 import json
 import re
 import base64
+import uuid
+import tempfile
 
 from flask import Flask, render_template, request, redirect, url_for, session, Response
 from flask_sqlalchemy import SQLAlchemy
@@ -251,9 +253,19 @@ def excusas():
 
             contenido = archivo.read()
 
-            # Guardar temporalmente la imagen
-            session["imagen_excusa"] = base64.b64encode(contenido).decode("utf-8")
+            # Crear identificador temporal para la imagen
+            imagen_id = str(uuid.uuid4())
 
+            # Guardar temporalmente la imagen en el servidor
+            ruta_temporal = os.path.join(
+                tempfile.gettempdir(),
+                imagen_id + ".jpg"
+            )
+
+            with open(ruta_temporal, "wb") as f:
+                f.write(contenido)
+
+            # Procesar imagen con Google Vision
             info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
             credentials = service_account.Credentials.from_service_account_info(info)
 
@@ -269,7 +281,8 @@ def excusas():
 
             return render_template(
                 "resultado.html",
-                datos=datos
+                datos=datos,
+                imagen_id=imagen_id
             )
 
     return render_template("excusas.html")
@@ -278,12 +291,24 @@ def excusas():
 @app.route("/guardar_excusa", methods=["POST"])
 def guardar_excusa():
 
-    imagen_guardada = session.pop("imagen_excusa", None)
+    imagen_id = request.form.get("imagen_id")
 
-    if imagen_guardada:
-        imagen_bytes = base64.b64decode(imagen_guardada)
-    else:
-        imagen_bytes = None
+    imagen_bytes = None
+
+    if imagen_id:
+
+        ruta_temporal = os.path.join(
+            tempfile.gettempdir(),
+            imagen_id + ".jpg"
+        )
+
+        if os.path.exists(ruta_temporal):
+
+            with open(ruta_temporal, "rb") as f:
+                imagen_bytes = f.read()
+
+            # Borrar archivo temporal después de recuperarlo
+            os.remove(ruta_temporal)
 
     excusa = Excusa(
         nombre=request.form["nombre"],
@@ -299,6 +324,7 @@ def guardar_excusa():
     db.session.commit()
 
     return redirect(url_for("excusas"))
+
 
 @app.route("/ver_excusa/<int:id>")
 def ver_excusa(id):
