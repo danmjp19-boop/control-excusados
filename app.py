@@ -561,6 +561,26 @@ def revisar_novedad(id):
 
     return redirect(url_for("novedades"))
 
+@app.route("/novedades")
+def novedades():
+
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("admin"))
+
+    lista_novedades = Novedad.query.order_by(
+        Novedad.fecha.desc()
+    ).all()
+
+    pendientes = Novedad.query.filter_by(
+        estado="Pendiente"
+    ).count()
+
+    return render_template(
+        "novedades.html",
+        novedades=lista_novedades,
+        pendientes=pendientes
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
