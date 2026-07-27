@@ -102,7 +102,29 @@ onkeyup="filtrar()">
 <div class="total" id="contador">
 🔎 Total encontrados: {{ excusas|length }}
 </div>
+    
+<form action="/descargar_excel" method="GET"
+      style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:20px;">
 
+    <div>
+        <label><b>📅 Desde</b></label><br>
+        <input type="date" name="desde" required
+               style="padding:10px;border:1px solid #ccc;border-radius:6px;">
+    </div>
+
+    <div>
+        <label><b>📅 Hasta</b></label><br>
+        <input type="date" name="hasta" required
+               style="padding:10px;border:1px solid #ccc;border-radius:6px;">
+    </div>
+
+    <button type="submit"
+            style="padding:11px 18px;background:#198754;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:bold;">
+        📊 Descargar Excel
+    </button>
+
+</form>
+    
 <table id="tabla">
 
 <tr>
