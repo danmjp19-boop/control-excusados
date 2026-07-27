@@ -187,6 +187,9 @@ def admin():
 @app.route("/usuarios")
 def usuarios():
 
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("admin"))
+
     usuarios = Usuario.query.all()
 
     return render_template(
@@ -194,11 +197,15 @@ def usuarios():
         usuarios=usuarios
     )
 
+
 @app.route("/crear_usuario", methods=["POST"])
 def crear_usuario():
 
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("admin"))
+
     if Usuario.query.filter_by(cedula=request.form["cedula"]).first():
-        return "Ya existe un usuario con esa cédula"
+        return "Ya existe un usuario con ese usuario"
 
     nuevo = Usuario(
         grado=request.form["grado"],
@@ -217,8 +224,12 @@ def crear_usuario():
 
     return redirect(url_for("usuarios"))
 
+
 @app.route("/editar_usuario/<int:id>", methods=["GET", "POST"])
 def editar_usuario(id):
+
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("admin"))
 
     usuario = Usuario.query.get_or_404(id)
 
@@ -242,8 +253,12 @@ def editar_usuario(id):
         usuario=usuario
     )
 
+
 @app.route("/eliminar_usuario/<int:id>")
 def eliminar_usuario(id):
+
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("admin"))
 
     usuario = Usuario.query.get_or_404(id)
 
@@ -251,7 +266,6 @@ def eliminar_usuario(id):
     db.session.commit()
 
     return redirect(url_for("usuarios"))
-
 
 @app.route("/excusas", methods=["GET", "POST"])
 def excusas():
