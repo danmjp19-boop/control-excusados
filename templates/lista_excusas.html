@@ -266,16 +266,41 @@ function filtrar(){
         const cedula = fila.cells[2].textContent.toLowerCase();
 
         const estadoFila = fila.getAttribute("data-estado");
-        const fecha = fila.getAttribute("data-fecha");
+
+        // Tomamos directamente la fecha de la columna INICIO
+        let fecha = fila.cells[4].textContent.trim();
 
         let anioFila = "";
         let mesFila = "";
 
-        if(fecha){
+        // Formato: 2026-07-27
+        if(fecha.includes("-")){
+
             const partes = fecha.split("-");
 
-            if(partes.length >= 2){
-                anioFila = partes[0];
+            if(partes.length === 3){
+
+                // Si empieza por año
+                if(partes[0].length === 4){
+                    anioFila = partes[0];
+                    mesFila = partes[1];
+                }
+
+                // Si viene 27-07-2026
+                else if(partes[2].length === 4){
+                    anioFila = partes[2];
+                    mesFila = partes[1];
+                }
+            }
+        }
+
+        // Formato: 27/07/2026
+        else if(fecha.includes("/")){
+
+            const partes = fecha.split("/");
+
+            if(partes.length === 3){
+                anioFila = partes[2];
                 mesFila = partes[1];
             }
         }
