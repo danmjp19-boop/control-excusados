@@ -249,6 +249,8 @@ function filtrar(){
 
     const texto = document.getElementById("buscar").value.toLowerCase();
     const estadoSeleccionado = document.getElementById("filtroEstado").value;
+    const anioSeleccionado = document.getElementById("filtroAnio").value;
+    const mesSeleccionado = document.getElementById("filtroMes").value;
 
     const filas = document.querySelectorAll("#tabla tr[data-estado]");
 
@@ -258,7 +260,21 @@ function filtrar(){
 
         const nombre = fila.cells[1].textContent.toLowerCase();
         const cedula = fila.cells[2].textContent.toLowerCase();
+
         const estadoFila = fila.getAttribute("data-estado");
+        const fecha = fila.getAttribute("data-fecha");
+
+        let anioFila = "";
+        let mesFila = "";
+
+        if(fecha){
+            const partes = fecha.split("-");
+
+            if(partes.length >= 2){
+                anioFila = partes[0];
+                mesFila = partes[1];
+            }
+        }
 
         const coincideTexto =
             nombre.includes(texto) ||
@@ -268,7 +284,20 @@ function filtrar(){
             estadoSeleccionado === "" ||
             estadoFila === estadoSeleccionado;
 
-        if(coincideTexto && coincideEstado){
+        const coincideAnio =
+            anioSeleccionado === "" ||
+            anioFila === anioSeleccionado;
+
+        const coincideMes =
+            mesSeleccionado === "" ||
+            mesFila === mesSeleccionado;
+
+        if(
+            coincideTexto &&
+            coincideEstado &&
+            coincideAnio &&
+            coincideMes
+        ){
             fila.style.display = "";
             encontrados++;
         }else{
