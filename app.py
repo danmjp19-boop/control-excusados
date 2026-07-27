@@ -64,6 +64,23 @@ class Novedad(db.Model):
         db.DateTime,
         default=db.func.now()
     )
+
+@app.context_processor
+def contador_novedades():
+
+    if session.get("rol") == "Administrador":
+
+        pendientes = Novedad.query.filter_by(
+            estado="Pendiente"
+        ).count()
+
+        return {
+            "novedades_pendientes": pendientes
+        }
+
+    return {
+        "novedades_pendientes": 0
+    }
     
 
 with app.app_context():
