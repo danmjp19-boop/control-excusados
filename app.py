@@ -447,6 +447,8 @@ def lista_excusas():
 
 @app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
 def editar_excusa(id):
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("lista_excusas"))
 
     excusa = Excusa.query.get_or_404(id)
 
@@ -466,6 +468,8 @@ def editar_excusa(id):
 
 @app.route("/eliminar_excusa/<int:id>")
 def eliminar_excusa(id):
+    if session.get("rol") != "Administrador":
+        return redirect(url_for("lista_excusas"))
 
     excusa = Excusa.query.get_or_404(id)
 
