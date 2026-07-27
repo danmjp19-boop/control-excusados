@@ -210,8 +210,6 @@ onkeyup="filtrar()">
 
 <script>
 
-<script>
-
 function filtrar(){
 
     const texto = document.getElementById("buscar").value.toLowerCase();
@@ -225,7 +223,7 @@ function filtrar(){
 
         const nombre = fila.cells[1].textContent.toLowerCase();
         const cedula = fila.cells[2].textContent.toLowerCase();
-        const estadoFila = fila.dataset.estado;
+        const estadoFila = fila.getAttribute("data-estado");
 
         const coincideTexto =
             nombre.includes(texto) ||
@@ -249,14 +247,5 @@ function filtrar(){
 }
 
 </script>
-
-}
-
-document.getElementById("contador").innerHTML="🔎 Total encontrados: "+encontrados;
-
-}
-
-</script>
-
 </body>
 </html>
