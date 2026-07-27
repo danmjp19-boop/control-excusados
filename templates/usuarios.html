@@ -86,7 +86,23 @@ onclick="return confirm('¿Eliminar este usuario?')">
 
     <form method="POST" action="/crear_usuario">
 
-        <input type="text" name="grado" placeholder="Grado" required style="width:100%;padding:10px;margin:5px 0;">
+        <select name="grado" required style="width:100%;padding:10px;margin:5px 0;">
+    <option value="" selected disabled>Seleccione el grado</option>
+    <option value="CR">CR</option>
+    <option value="TC">TC</option>
+    <option value="MY">MY</option>
+    <option value="CT">CT</option>
+    <option value="TE">TE</option>
+    <option value="ST">ST</option>
+    <option value="CM">CM</option>
+    <option value="SC">SC</option>
+    <option value="IJ">IJ</option>
+    <option value="IT">IT</option>
+    <option value="SI">SI</option>
+    <option value="PT">PT</option>
+    <option value="AXP">AXP</option>
+    <option value="N.U.">N.U.</option>
+</select>
 
         <input type="text" name="nombres" placeholder="Nombres" required style="width:100%;padding:10px;margin:5px 0;">
 
