@@ -143,6 +143,28 @@ onkeyup="filtrar()">
 
 </select>
 
+<select id="filtroCai"
+        onchange="filtrar()"
+        style="padding:10px;border:1px solid #ccc;border-radius:8px;margin-bottom:20px;font-size:16px;">
+
+    <option value="">Todos los CAI</option>
+    <option value="CAI ANDES">CAI ANDES</option>
+    <option value="CAI AURES">CAI AURES</option>
+    <option value="CAI COLINA CAMPESTRE">CAI COLINA CAMPESTRE</option>
+    <option value="CAI EL PINAR">CAI EL PINAR</option>
+    <option value="CAI EL RINCON">CAI EL RINCON</option>
+    <option value="CAI FONTANAR">CAI FONTANAR</option>
+    <option value="CAI GUAYMARAL">CAI GUAYMARAL</option>
+    <option value="CAI LA ALHAMBRA">CAI LA ALHAMBRA</option>
+    <option value="CAI LA GAITANA">CAI LA GAITANA</option>
+    <option value="CAI MAZUREN">CAI MAZUREN</option>
+    <option value="CAI SAN JOSE DE BAVARIA">CAI SAN JOSE DE BAVARIA</option>
+    <option value="CAI TIERRA LINDA">CAI TIERRA LINDA</option>
+    <option value="CAI VILLA DEL PRADO">CAI VILLA DEL PRADO</option>
+    <option value="ESTACION DE POLICIA SUBA">ESTACION DE POLICIA SUBA</option>
+
+</select>
+
 <div class="total" id="contador">
 🔎 Total encontrados: {{ excusas|length }}
 </div>
@@ -257,6 +279,7 @@ function filtrar(){
     const estadoSeleccionado = document.getElementById("filtroEstado").value;
     const anioSeleccionado = document.getElementById("filtroAnio").value;
     const mesSeleccionado = document.getElementById("filtroMes").value;
+    const caiSeleccionado = document.getElementById("filtroCai").value;
 
     const filas = document.querySelectorAll("#tabla tr[data-estado]");
 
@@ -266,6 +289,7 @@ function filtrar(){
 
         const nombre = fila.cells[1].textContent.toLowerCase();
         const cedula = fila.cells[2].textContent.toLowerCase();
+        const caiFila = fila.cells[3].textContent.trim();
 
         const estadoFila = fila.getAttribute("data-estado");
 
@@ -323,11 +347,16 @@ function filtrar(){
             mesSeleccionado === "" ||
             mesFila === mesSeleccionado;
 
+        const coincideCai =
+            caiSeleccionado === "" ||
+            caiFila === caiSeleccionado;
+
         if(
             coincideTexto &&
             coincideEstado &&
             coincideAnio &&
             coincideMes
+            coincideCai
         ){
             fila.style.display = "";
             encontrados++;
