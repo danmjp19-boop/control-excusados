@@ -503,6 +503,7 @@ def editar_excusa(id):
     if request.method == "POST":
         excusa.nombre = request.form["nombre"]
         excusa.cedula = request.form["cedula"]
+        excusa.cai = request.form["cai"]
         excusa.orden = request.form["orden"]
         excusa.fecha_inicio = request.form["fecha_inicio"]
         excusa.fecha_final = request.form["fecha_final"]
