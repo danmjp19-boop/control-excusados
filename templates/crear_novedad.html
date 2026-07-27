@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva Novedad{% endblock %}
+
+{% block content %}
+
+<h1>💬 Registrar Novedad</h1>
+
+<div class="card" style="max-width:650px;">
+
+    <h3>Excusa #{{ excusa.id }}</h3>
+
+    <p><b>Nombre:</b> {{ excusa.nombre }}</p>
+    <p><b>Cédula:</b> {{ excusa.cedula }}</p>
+    <p><b>Orden:</b> {{ excusa.orden }}</p>
+
+    <br>
+
+    <form method="POST">
+
+        <label><b>Comentario</b></label>
+
+        <textarea
+            name="comentario"
+            required
+            maxlength="1000"
+            placeholder="Escriba aquí la novedad..."
+            style="width:100%;min-height:150px;padding:12px;margin-top:8px;box-sizing:border-box;font-size:16px;border:1px solid #ccc;border-radius:8px;"></textarea>
+
+        <br><br>
+
+        <button type="submit">
+            📩 Enviar Novedad
+        </button>
+
+        <a href="/lista_excusas"
+           style="margin-left:15px;text-decoration:none;">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}
