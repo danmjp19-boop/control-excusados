@@ -58,6 +58,12 @@ input{
     box-sizing:border-box;
 }
 
+input[readonly]{
+    background:#e9ecef;
+    cursor:not-allowed;
+    font-weight:bold;
+}
+
 button{
     width:100%;
     background:#198754;
@@ -98,13 +104,28 @@ button:hover{
 <input type="text" name="orden" value="{{ datos.orden }}">
 
 <label>📅 Fecha inicial</label>
-<input type="date" name="fecha_inicio" value="{{ datos.fecha_inicio }}">
+<input
+    type="date"
+    id="fecha_inicio"
+    name="fecha_inicio"
+    value="{{ datos.fecha_inicio }}"
+    onchange="calcularDias()">
 
 <label>📅 Fecha final</label>
-<input type="date" name="fecha_final" value="{{ datos.fecha_final }}">
+<input
+    type="date"
+    id="fecha_final"
+    name="fecha_final"
+    value="{{ datos.fecha_final }}"
+    onchange="calcularDias()">
 
 <label>📆 Número de días</label>
-<input type="number" name="dias" value="{{ datos.dias }}">
+<input
+    type="number"
+    id="dias"
+    name="dias"
+    value="{{ datos.dias }}"
+    readonly>
 
 <button type="submit">
 💾 Guardar Excusa
@@ -119,6 +140,46 @@ button:hover{
 </a>
 
 </div>
+
+<script>
+
+function calcularDias(){
+
+    const inicio = document.getElementById("fecha_inicio").value;
+    const final = document.getElementById("fecha_final").value;
+    const campoDias = document.getElementById("dias");
+
+    if(!inicio || !final){
+        campoDias.value = "";
+        return;
+    }
+
+    const fechaInicio = new Date(inicio + "T00:00:00");
+    const fechaFinal = new Date(final + "T00:00:00");
+
+    if(fechaFinal < fechaInicio){
+
+        campoDias.value = "";
+
+        alert("La fecha final no puede ser anterior a la fecha inicial.");
+
+        return;
+    }
+
+    const diferencia = fechaFinal - fechaInicio;
+
+    const dias = Math.floor(
+        diferencia / (1000 * 60 * 60 * 24)
+    ) + 1;
+
+    campoDias.value = dias;
+}
+
+/* Calcula automáticamente al abrir la página
+   si la IA ya extrajo ambas fechas */
+window.addEventListener("load", calcularDias);
+
+</script>
 
 </body>
 </html>
