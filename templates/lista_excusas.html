@@ -175,6 +175,7 @@ onkeyup="filtrar()">
 <th>ID</th>
 <th>Nombre</th>
 <th>Cédula</th>
+<th>CAI</th>
 <th>Orden</th>
 <th>Inicio</th>
 <th>Final</th>
@@ -191,6 +192,7 @@ onkeyup="filtrar()">
 <td>{{ e.id }}</td>
 <td>{{ e.nombre }}</td>
 <td>{{ e.cedula }}</td>
+<td>{{ e.cai or "-" }}</td>
 <td>{{ e.orden }}</td>
 <td>{{ e.fecha_inicio }}</td>
 <td>{{ e.fecha_final }}</td>
@@ -268,7 +270,7 @@ function filtrar(){
         const estadoFila = fila.getAttribute("data-estado");
 
         // Tomamos directamente la fecha de la columna INICIO
-        let fecha = fila.cells[4].textContent.trim();
+        let fecha = fila.cells[5].textContent.trim();
 
         let anioFila = "";
         let mesFila = "";
