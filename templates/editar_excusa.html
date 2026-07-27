@@ -137,5 +137,36 @@ input{
 
 </div>
 
+    <script>
+function calcularDias(){
+
+    const inicio = document.getElementById("fecha_inicio").value;
+    const final = document.getElementById("fecha_final").value;
+    const dias = document.getElementById("dias");
+
+    if(inicio && final){
+
+        const fechaInicio = new Date(inicio + "T00:00:00");
+        const fechaFinal = new Date(final + "T00:00:00");
+
+        if(fechaFinal >= fechaInicio){
+
+            const diferencia = fechaFinal - fechaInicio;
+
+            const numeroDias =
+                Math.floor(diferencia / (1000 * 60 * 60 * 24)) + 1;
+
+            dias.value = numeroDias;
+
+        }else{
+
+            dias.value = "";
+            alert("La fecha final no puede ser anterior a la fecha inicial.");
+
+        }
+    }
+}
+</script>
+
 </body>
 </html>
