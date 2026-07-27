@@ -152,7 +152,7 @@ onkeyup="filtrar()">
 
 {% for e in excusas %}
 
-<tr>
+<tr data-estado="{% if e.dias_restantes == 'Finalizada' %}finalizada{% elif e.dias_restantes == 'Finaliza hoy' %}hoy{% else %}vigente{% endif %}">
 
 <td>{{ e.id }}</td>
 <td>{{ e.nombre }}</td>
@@ -214,48 +214,35 @@ onkeyup="filtrar()">
 
 function filtrar(){
 
-    let texto = document.getElementById("buscar").value.toUpperCase();
-    let estado = document.getElementById("filtroEstado").value;
+    const texto = document.getElementById("buscar").value.toLowerCase();
+    const estadoSeleccionado = document.getElementById("filtroEstado").value;
 
-    let tabla = document.getElementById("tabla");
-    let filas = tabla.getElementsByTagName("tr");
+    const filas = document.querySelectorAll("#tabla tr[data-estado]");
 
     let encontrados = 0;
 
-    for(let i = 1; i < filas.length; i++){
+    filas.forEach(function(fila){
 
-        let nombre = filas[i].cells[1].textContent.toUpperCase();
-        let cedula = filas[i].cells[2].textContent.toUpperCase();
-        let restantes = filas[i].cells[7].textContent.toLowerCase();
+        const nombre = fila.cells[1].textContent.toLowerCase();
+        const cedula = fila.cells[2].textContent.toLowerCase();
+        const estadoFila = fila.dataset.estado;
 
-        let coincideBusqueda =
+        const coincideTexto =
             nombre.includes(texto) ||
             cedula.includes(texto);
 
-        let coincideEstado = false;
+        const coincideEstado =
+            estadoSeleccionado === "" ||
+            estadoFila === estadoSeleccionado;
 
-        if(estado === ""){
-            coincideEstado = true;
-        }
-        else if(estado === "vigente"){
-            coincideEstado =
-                !restantes.includes("finalizada") &&
-                !restantes.includes("finaliza hoy");
-        }
-        else if(estado === "hoy"){
-            coincideEstado = restantes.includes("finaliza hoy");
-        }
-        else if(estado === "finalizada"){
-            coincideEstado = restantes.includes("finalizada");
-        }
-
-        if(coincideBusqueda && coincideEstado){
-            filas[i].style.display = "";
+        if(coincideTexto && coincideEstado){
+            fila.style.display = "";
             encontrados++;
         }else{
-            filas[i].style.display = "none";
+            fila.style.display = "none";
         }
-    }
+
+    });
 
     document.getElementById("contador").innerHTML =
         "🔎 Total encontrados: " + encontrados;
