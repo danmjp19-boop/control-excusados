@@ -86,47 +86,87 @@ onclick="return confirm('¿Eliminar este usuario?')">
 
     <form method="POST" action="/crear_usuario">
 
-        <select name="grado" required style="width:100%;padding:10px;margin:5px 0;">
-    <option value="" selected disabled>Seleccione el grado</option>
-    <option value="CR">CR</option>
-    <option value="TC">TC</option>
-    <option value="MY">MY</option>
-    <option value="CT">CT</option>
-    <option value="TE">TE</option>
-    <option value="ST">ST</option>
-    <option value="CM">CM</option>
-    <option value="SC">SC</option>
-    <option value="IJ">IJ</option>
-    <option value="IT">IT</option>
-    <option value="SI">SI</option>
-    <option value="PT">PT</option>
-    <option value="AXP">AXP</option>
-    <option value="N.U.">N.U.</option>
-</select>
+    <!-- GRADO -->
+    <select name="grado" required
+            style="width:100%;padding:10px;margin:5px 0;">
+        <option value="" selected disabled>Seleccione el grado</option>
+        <option value="CR">CR</option>
+        <option value="TC">TC</option>
+        <option value="MY">MY</option>
+        <option value="CT">CT</option>
+        <option value="TE">TE</option>
+        <option value="ST">ST</option>
+        <option value="CM">CM</option>
+        <option value="SC">SC</option>
+        <option value="IJ">IJ</option>
+        <option value="IT">IT</option>
+        <option value="SI">SI</option>
+        <option value="PT">PT</option>
+        <option value="AXP">AXP</option>
+        <option value="N.U.">N.U.</option>
+    </select>
 
-        <input type="text" name="nombres" placeholder="Nombres" required style="width:100%;padding:10px;margin:5px 0;">
+    <!-- NOMBRES -->
+    <input type="text"
+           name="nombres"
+           placeholder="Nombres"
+           required
+           style="width:100%;padding:10px;margin:5px 0;">
 
-        <input type="text" name="apellidos" placeholder="Apellidos" required style="width:100%;padding:10px;margin:5px 0;">
+    <!-- APELLIDOS -->
+    <input type="text"
+           name="apellidos"
+           placeholder="Apellidos"
+           required
+           style="width:100%;padding:10px;margin:5px 0;">
 
-        <input type="text" name="cedula" placeholder="Cédula" required style="width:100%;padding:10px;margin:5px 0;">
+    <!-- ROL -->
+    <select name="rol" required
+            style="width:100%;padding:10px;margin:5px 0;">
+        <option value="" selected disabled>Seleccione el rol</option>
+        <option value="Administrador">Administrador</option>
+        <option value="Secretario">Secretario</option>
+        <option value="Supervisor">Supervisor</option>
+    </select>
 
-        <input type="password" name="password" placeholder="Contraseña" required style="width:100%;padding:10px;margin:5px 0;">
+    <!-- USUARIO -->
+    <input type="text"
+           name="cedula"
+           placeholder="Usuario"
+           required
+           style="width:100%;padding:10px;margin:5px 0;">
 
-        <input type="text" name="rol" placeholder="Rol" required style="width:100%;padding:10px;margin:5px 0;">
+    <!-- CONTRASEÑA -->
+    <input type="password"
+           name="password"
+           placeholder="Contraseña"
+           required
+           style="width:100%;padding:10px;margin:5px 0;">
 
-        <input type="text" name="unidad" placeholder="Unidad" required style="width:100%;padding:10px;margin:5px 0;">
+    <!-- DEPENDENCIA O CAI -->
+    <input type="text"
+           name="cai"
+           placeholder="Dependencia o CAI"
+           required
+           style="width:100%;padding:10px;margin:5px 0;">
 
-        <input type="text" name="cai" placeholder="CAI" required style="width:100%;padding:10px;margin:5px 0;">
+    <!-- Se conserva unidad para no romper el backend actual -->
+    <input type="hidden"
+           name="unidad"
+           value="ESTACION DE POLICIA SUBA">
 
-        <br><br>
+    <br><br>
 
-        <button type="submit">💾 Guardar</button>
+    <button type="submit">
+        💾 Guardar
+    </button>
 
-        <button type="button" onclick="document.getElementById('nuevoUsuario').style.display='none'">
-            Cancelar
-        </button>
+    <button type="button"
+            onclick="document.getElementById('nuevoUsuario').style.display='none'">
+        Cancelar
+    </button>
 
-    </form>
+</form>
 
 </div>
 
