@@ -371,6 +371,15 @@ function filtrar(){
 }
 
 window.addEventListener("load", function(){
+    const hoy = new Date();
+
+const anioActual = hoy.getFullYear().toString();
+const mesActual = String(hoy.getMonth() + 1).padStart(2, "0");
+
+document.getElementById("filtroAnio").value = anioActual;
+document.getElementById("filtroMes").value = mesActual;
+
+filtrar();
 
     if(window.location.hash){
 
