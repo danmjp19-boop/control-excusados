@@ -39,6 +39,7 @@ class Excusa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(150), nullable=False)
     cedula = db.Column(db.String(20), nullable=False)
+    cai = db.Column(db.String(100), nullable=True)
     orden = db.Column(db.String(30))
     fecha_inicio = db.Column(db.String(20))
     fecha_final = db.Column(db.String(20))
@@ -85,6 +86,16 @@ def contador_novedades():
 
 with app.app_context():
     db.create_all()
+
+    try:
+        db.session.execute(
+            db.text("ALTER TABLE excusa ADD COLUMN IF NOT EXISTS cai VARCHAR(100)")
+        )
+        db.session.commit()
+        print("Columna CAI verificada correctamente")
+    except Exception as e:
+        db.session.rollback()
+        print("Error verificando columna CAI:", e)
 
     try:
         db.session.execute(
