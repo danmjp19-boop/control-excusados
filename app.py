@@ -497,6 +497,39 @@ def eliminar_excusa(id):
 
     return redirect(url_for("lista_excusas"))
 
+@app.route("/crear_novedad/<int:id>", methods=["GET", "POST"])
+def crear_novedad(id):
+
+    # Solo Supervisor y Secretario pueden enviar novedades
+    if session.get("rol") not in ["Supervisor", "Secretario"]:
+        return redirect(url_for("lista_excusas"))
+
+    excusa = Excusa.query.get_or_404(id)
+
+    if request.method == "POST":
+
+        comentario = request.form["comentario"].strip()
+
+        if comentario:
+
+            nueva = Novedad(
+                excusa_id=excusa.id,
+                usuario=session.get("usuario", "Sin identificar"),
+                rol=session.get("rol", ""),
+                comentario=comentario,
+                estado="Pendiente"
+            )
+
+            db.session.add(nueva)
+            db.session.commit()
+
+        return redirect(url_for("lista_excusas"))
+
+    return render_template(
+        "crear_novedad.html",
+        excusa=excusa
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
