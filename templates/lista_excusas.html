@@ -185,9 +185,8 @@ onkeyup="filtrar()">
 
 {% for e in excusas %}
 
-<tr
-    data-estado="{% if e.dias_restantes == 'Finalizada' %}finalizada{% elif e.dias_restantes == 'Finaliza hoy' %}hoy{% else %}vigente{% endif %}"
-    data-fecha="{{ e.fecha_inicio }}">
+<tr id="excusa-{{ e.id }}"
+    data-estado="{% if e.dias_restantes == 'Finalizada' %}finalizada{% elif e.dias_restantes == 'Finaliza hoy' %}hoy{% else %}vigente{% endif %}">
 
 <td>{{ e.id }}</td>
 <td>{{ e.nombre }}</td>
