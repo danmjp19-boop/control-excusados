@@ -45,7 +45,7 @@ class Excusa(db.Model):
 with app.app_context():
     db.create_all()
 
-        try:
+    try:
         db.session.execute(
             db.text("ALTER TABLE excusa ADD COLUMN IF NOT EXISTS imagen BYTEA")
         )
