@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Novedad{% endblock %}
+
+{% block content %}
+
+<h1>✏️ Editar Novedad</h1>
+
+<div class="card" style="max-width:650px;">
+
+    <h3>Información de la novedad</h3>
+
+    <p>
+        <b>Usuario:</b> {{ novedad.usuario }}
+    </p>
+
+    <p>
+        <b>Rol:</b> {{ novedad.rol }}
+    </p>
+
+    <p>
+        <b>Excusa:</b> #{{ novedad.excusa_id }}
+    </p>
+
+    <p>
+        <b>Fecha:</b>
+        {{ novedad.fecha.strftime("%d/%m/%Y %H:%M") }}
+    </p>
+
+    <hr style="margin:20px 0;">
+
+    <form method="POST">
+
+        <label>
+            <b>💬 Comentario</b>
+        </label>
+
+        <textarea
+            name="comentario"
+            required
+            maxlength="1000"
+            style="
+                width:100%;
+                min-height:160px;
+                padding:12px;
+                margin-top:10px;
+                box-sizing:border-box;
+                font-size:16px;
+                border:1px solid #ccc;
+                border-radius:8px;
+                resize:vertical;
+            ">{{ novedad.comentario }}</textarea>
+
+        <br><br>
+
+        <button
+            type="submit"
+            style="
+                padding:12px 20px;
+                background:#198754;
+                color:white;
+                border:none;
+                border-radius:6px;
+                cursor:pointer;
+                font-weight:bold;
+            ">
+            💾 Guardar Cambios
+        </button>
+
+        <a
+            href="/novedades"
+            style="
+                margin-left:15px;
+                text-decoration:none;
+                color:#0b5ed7;
+                font-weight:bold;
+            ">
+            ❌ Cancelar
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}
