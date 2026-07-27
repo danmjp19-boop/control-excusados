@@ -99,6 +99,17 @@ class="buscador"
 placeholder="🔍 Buscar por nombre o cédula..."
 onkeyup="filtrar()">
 
+    <select id="filtroEstado"
+        onchange="filtrar()"
+        style="padding:10px;border:1px solid #ccc;border-radius:8px;margin-bottom:20px;font-size:16px;">
+
+    <option value="">Todos</option>
+    <option value="vigente">🟢 Vigentes</option>
+    <option value="hoy">🟠 Finalizan hoy</option>
+    <option value="finalizada">🔴 Finalizadas</option>
+
+</select>
+
 <div class="total" id="contador">
 🔎 Total encontrados: {{ excusas|length }}
 </div>
@@ -199,35 +210,58 @@ onkeyup="filtrar()">
 
 <script>
 
+<script>
+
 function filtrar(){
 
-let input=document.getElementById("buscar");
-let filtro=input.value.toUpperCase();
-let tabla=document.getElementById("tabla");
-let filas=tabla.getElementsByTagName("tr");
+    let texto = document.getElementById("buscar").value.toUpperCase();
+    let estado = document.getElementById("filtroEstado").value;
 
-let encontrados=0;
+    let tabla = document.getElementById("tabla");
+    let filas = tabla.getElementsByTagName("tr");
 
-for(let i=1;i<filas.length;i++){
+    let encontrados = 0;
 
-let nombre=filas[i].cells[1].textContent.toUpperCase();
-let cedula=filas[i].cells[2].textContent.toUpperCase();
+    for(let i = 1; i < filas.length; i++){
 
-if(filtro==""){
+        let nombre = filas[i].cells[1].textContent.toUpperCase();
+        let cedula = filas[i].cells[2].textContent.toUpperCase();
+        let restantes = filas[i].cells[7].textContent.toLowerCase();
 
-filas[i].style.display="";
-encontrados++;
+        let coincideBusqueda =
+            nombre.includes(texto) ||
+            cedula.includes(texto);
 
-}else if(nombre.indexOf(filtro)>-1 || cedula.indexOf(filtro)>-1){
+        let coincideEstado = false;
 
-filas[i].style.display="";
-encontrados++;
+        if(estado === ""){
+            coincideEstado = true;
+        }
+        else if(estado === "vigente"){
+            coincideEstado =
+                !restantes.includes("finalizada") &&
+                !restantes.includes("finaliza hoy");
+        }
+        else if(estado === "hoy"){
+            coincideEstado = restantes.includes("finaliza hoy");
+        }
+        else if(estado === "finalizada"){
+            coincideEstado = restantes.includes("finalizada");
+        }
 
-}else{
+        if(coincideBusqueda && coincideEstado){
+            filas[i].style.display = "";
+            encontrados++;
+        }else{
+            filas[i].style.display = "none";
+        }
+    }
 
-filas[i].style.display="none";
-
+    document.getElementById("contador").innerHTML =
+        "🔎 Total encontrados: " + encontrados;
 }
+
+</script>
 
 }
 
