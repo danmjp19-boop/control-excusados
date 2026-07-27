@@ -127,7 +127,7 @@ def login():
         ).first()
 
         if user:
-    return redirect(url_for("admin"))
+            return redirect(url_for("admin"))
 
         return "Usuario o contraseña incorrectos"
 
