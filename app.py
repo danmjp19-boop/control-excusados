@@ -497,6 +497,25 @@ def eliminar_excusa(id):
 
     return redirect(url_for("lista_excusas"))
 
+class Novedad(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    excusa_id = db.Column(db.Integer, nullable=False)
+
+    usuario = db.Column(db.String(100), nullable=False)
+
+    rol = db.Column(db.String(30), nullable=False)
+
+    comentario = db.Column(db.Text, nullable=False)
+
+    estado = db.Column(db.String(20), default="Pendiente")
+
+    fecha = db.Column(
+        db.DateTime,
+        default=db.func.now()
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
