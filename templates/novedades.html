@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Novedades{% endblock %}
+
+{% block content %}
+
+<h1>🔔 Novedades</h1>
+
+<div class="card">
+
+    <h3>
+        Pendientes:
+        <span style="color:red;">{{ pendientes }}</span>
+    </h3>
+
+    <br>
+
+    <table width="100%" cellspacing="0">
+
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Excusa</th>
+                <th>Comentario</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for n in novedades %}
+
+            <tr>
+
+                <td>
+                    {{ n.fecha.strftime("%d/%m/%Y %H:%M") }}
+                </td>
+
+                <td>{{ n.usuario }}</td>
+
+                <td>{{ n.rol }}</td>
+
+                <td>
+                    #{{ n.excusa_id }}
+                    <a href="/ver_excusa/{{ n.excusa_id }}"
+                       target="_blank">
+                        📷 Ver
+                    </a>
+                </td>
+
+                <td>{{ n.comentario }}</td>
+
+                <td>
+
+                    {% if n.estado == "Pendiente" %}
+
+                        <span style="color:red;font-weight:bold;">
+                            🔴 Pendiente
+                        </span>
+
+                    {% else %}
+
+                        <span style="color:green;font-weight:bold;">
+                            ✅ Revisado
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        {% else %}
+
+            <tr>
+                <td colspan="6" style="text-align:center;padding:30px;">
+                    No hay novedades registradas.
+                </td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
