@@ -25,6 +25,7 @@
                 <th>Excusa</th>
                 <th>Comentario</th>
                 <th>Estado</th>
+                <th>Acción</th>
             </tr>
         </thead>
 
@@ -70,12 +71,32 @@
 
                 </td>
 
+                <td>
+
+    {% if n.estado == "Pendiente" %}
+
+        <a href="/revisar_novedad/{{ n.id }}"
+           onclick="return confirm('¿Marcar esta novedad como revisada?')"
+           style="color:#198754;font-weight:bold;text-decoration:none;">
+            ✅ Marcar revisada
+        </a>
+
+    {% else %}
+
+        <span style="color:#777;">
+            Revisada
+        </span>
+
+    {% endif %}
+
+</td>
+
             </tr>
 
         {% else %}
 
             <tr>
-                <td colspan="6" style="text-align:center;padding:30px;">
+                <td colspan="7" style="text-align:center;padding:30px;">
                     No hay novedades registradas.
                 </td>
             </tr>
