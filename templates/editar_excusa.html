@@ -96,6 +96,30 @@ input{
         <input type="text" name="cedula"
                value="{{ excusa.cedula }}" required>
 
+        <label>🏢 CAI / Dependencia</label>
+
+<select name="cai" required
+        style="width:100%;padding:12px;font-size:16px;border:1px solid #ccc;border-radius:8px;margin-bottom:18px;box-sizing:border-box;">
+
+    <option value="">Seleccione CAI / Dependencia</option>
+
+    <option value="CAI ANDES" {% if excusa.cai == "CAI ANDES" %}selected{% endif %}>CAI ANDES</option>
+    <option value="CAI AURES" {% if excusa.cai == "CAI AURES" %}selected{% endif %}>CAI AURES</option>
+    <option value="CAI COLINA CAMPESTRE" {% if excusa.cai == "CAI COLINA CAMPESTRE" %}selected{% endif %}>CAI COLINA CAMPESTRE</option>
+    <option value="CAI EL PINAR" {% if excusa.cai == "CAI EL PINAR" %}selected{% endif %}>CAI EL PINAR</option>
+    <option value="CAI EL RINCON" {% if excusa.cai == "CAI EL RINCON" %}selected{% endif %}>CAI EL RINCON</option>
+    <option value="CAI FONTANAR" {% if excusa.cai == "CAI FONTANAR" %}selected{% endif %}>CAI FONTANAR</option>
+    <option value="CAI GUAYMARAL" {% if excusa.cai == "CAI GUAYMARAL" %}selected{% endif %}>CAI GUAYMARAL</option>
+    <option value="CAI LA ALHAMBRA" {% if excusa.cai == "CAI LA ALHAMBRA" %}selected{% endif %}>CAI LA ALHAMBRA</option>
+    <option value="CAI LA GAITANA" {% if excusa.cai == "CAI LA GAITANA" %}selected{% endif %}>CAI LA GAITANA</option>
+    <option value="CAI MAZUREN" {% if excusa.cai == "CAI MAZUREN" %}selected{% endif %}>CAI MAZUREN</option>
+    <option value="CAI SAN JOSE DE BAVARIA" {% if excusa.cai == "CAI SAN JOSE DE BAVARIA" %}selected{% endif %}>CAI SAN JOSE DE BAVARIA</option>
+    <option value="CAI TIERRA LINDA" {% if excusa.cai == "CAI TIERRA LINDA" %}selected{% endif %}>CAI TIERRA LINDA</option>
+    <option value="CAI VILLA DEL PRADO" {% if excusa.cai == "CAI VILLA DEL PRADO" %}selected{% endif %}>CAI VILLA DEL PRADO</option>
+    <option value="ESTACION DE POLICIA SUBA" {% if excusa.cai == "ESTACION DE POLICIA SUBA" %}selected{% endif %}>ESTACION DE POLICIA SUBA</option>
+
+</select>
+
         <label>Orden</label>
         <input type="text" name="orden"
                value="{{ excusa.orden }}">
