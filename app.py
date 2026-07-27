@@ -45,6 +45,25 @@ class Excusa(db.Model):
     dias = db.Column(db.String(10))
     fecha_registro = db.Column(db.DateTime, default=db.func.now())
     imagen = db.Column(db.LargeBinary, nullable=True)
+
+class Novedad(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    excusa_id = db.Column(db.Integer, nullable=False)
+
+    usuario = db.Column(db.String(100), nullable=False)
+
+    rol = db.Column(db.String(30), nullable=False)
+
+    comentario = db.Column(db.Text, nullable=False)
+
+    estado = db.Column(db.String(20), default="Pendiente")
+
+    fecha = db.Column(
+        db.DateTime,
+        default=db.func.now()
+    )
     
 
 with app.app_context():
