@@ -93,7 +93,7 @@ button:hover{
 <h2>Nueva Excusa Médica</h2>
 
 <form action="/guardar_excusa" method="POST">
-
+<input type="hidden" name="imagen_id" value="{{ imagen_id }}">
 <label>👤 Nombre completo</label>
 <input type="text" name="nombre" value="{{ datos.nombre }}">
 
