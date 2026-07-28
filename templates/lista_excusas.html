@@ -371,13 +371,32 @@ function filtrar(){
 }
 
 window.addEventListener("load", function(){
+    const parametros = new URLSearchParams(window.location.search);
+const estadoURL = parametros.get("estado");
+
+if(estadoURL){
+    document.getElementById("filtroEstado").value = estadoURL;
+}  
     const hoy = new Date();
 
 const anioActual = hoy.getFullYear().toString();
 const mesActual = String(hoy.getMonth() + 1).padStart(2, "0");
 
-document.getElementById("filtroAnio").value = anioActual;
-document.getElementById("filtroMes").value = mesActual;
+if(estadoURL){
+
+    // Si viene desde una tarjeta del Panel de Control,
+    // no limitar por año ni por mes
+    document.getElementById("filtroAnio").value = "";
+    document.getElementById("filtroMes").value = "";
+
+}else{
+
+    // Si entra normalmente al listado,
+    // mostrar automáticamente el mes actual
+    document.getElementById("filtroAnio").value = anioActual;
+    document.getElementById("filtroMes").value = mesActual;
+
+}
 
 filtrar();
 
