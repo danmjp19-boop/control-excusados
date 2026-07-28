@@ -4,6 +4,7 @@ import re
 import base64
 import uuid
 import tempfile
+from functools import wraps
 
 from flask import Flask, render_template, request, redirect, url_for, session, Response, send_file
 from flask_sqlalchemy import SQLAlchemy
@@ -21,6 +22,17 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+
+        if "usuario_id" not in session:
+            return redirect(url_for("login"))
+
+        return f(*args, **kwargs)
+
+    return decorated_function
 
 
 class Usuario(db.Model):
@@ -205,6 +217,7 @@ def login():
     return render_template("login.html")
 
 @app.route("/admin")
+@login_require
 def admin():
 
     from datetime import datetime
