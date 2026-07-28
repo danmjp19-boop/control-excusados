@@ -22,20 +22,44 @@
         <h1>{{ total_usuarios }}</h1>
     </div>
 
-    <div class="card" style="width:220px;">
-        <h3>📄 Excusas Activas</h3>
-        <h1>{{ excusas_activas }}</h1>
-    </div>
 
-    <div class="card" style="width:220px;">
-        <h3>⚠ Vencen Hoy</h3>
-        <h1>{{ vencen_hoy }}</h1>
-    </div>
+    <!-- EXCUSAS ACTIVAS -->
+    <a href="/lista_excusas?estado=vigente"
+       style="text-decoration:none;color:inherit;">
 
-    <div class="card" style="width:220px;">
-        <h3>📊 Total Registradas</h3>
-        <h1>{{ total_excusas }}</h1>
-    </div>
+        <div class="card"
+             style="width:220px;cursor:pointer;">
+            <h3>📄 Excusas Activas</h3>
+            <h1>{{ excusas_activas }}</h1>
+        </div>
+
+    </a>
+
+
+    <!-- VENCEN HOY -->
+    <a href="/lista_excusas?estado=hoy"
+       style="text-decoration:none;color:inherit;">
+
+        <div class="card"
+             style="width:220px;cursor:pointer;">
+            <h3>⚠ Vencen Hoy</h3>
+            <h1>{{ vencen_hoy }}</h1>
+        </div>
+
+    </a>
+
+
+    <!-- TOTAL REGISTRADAS -->
+    <a href="/lista_excusas"
+       style="text-decoration:none;color:inherit;">
+
+        <div class="card"
+             style="width:220px;cursor:pointer;">
+            <h3>📊 Total Registradas</h3>
+            <h1>{{ total_excusas }}</h1>
+        </div>
+
+    </a>
 
 </div>
 
