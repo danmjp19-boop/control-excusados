@@ -371,23 +371,51 @@ function filtrar(){
 }
 
 window.addEventListener("load", function(){
+
     const parametros = new URLSearchParams(window.location.search);
-const estadoURL = parametros.get("estado");
-   const mostrarTodas = parametros.get("mostrar") === "todas"; 
+    const estadoURL = parametros.get("estado");
+    const mostrarTodas = parametros.get("mostrar") === "todas";
 
-if(estadoURL || mostrarTodas){
+    const hoy = new Date();
+    const anioActual = hoy.getFullYear().toString();
+    const mesActual = String(hoy.getMonth() + 1).padStart(2, "0");
 
-    document.getElementById("filtroAnio").value = "";
-    document.getElementById("filtroMes").value = "";
+    // ------------------------------------
+    // ENTRADA DESDE PANEL DE CONTROL
+    // ------------------------------------
 
-}else{
+    if(estadoURL){
 
-    document.getElementById("filtroAnio").value = anioActual;
-    document.getElementById("filtroMes").value = mesActual;
+        // Activas o vencen hoy
+        document.getElementById("filtroEstado").value = estadoURL;
 
-}
+        // No limitar por mes ni año
+        document.getElementById("filtroAnio").value = "";
+        document.getElementById("filtroMes").value = "";
 
-filtrar();
+    }else if(mostrarTodas){
+
+        // Total registradas: mostrar absolutamente todas
+        document.getElementById("filtroEstado").value = "";
+        document.getElementById("filtroAnio").value = "";
+        document.getElementById("filtroMes").value = "";
+
+    }else{
+
+        // Entrada NORMAL al Listado de Excusas
+        // Siempre mostrar el mes y año actuales
+        document.getElementById("filtroEstado").value = "";
+        document.getElementById("filtroAnio").value = anioActual;
+        document.getElementById("filtroMes").value = mesActual;
+    }
+
+    // Aplicar los filtros
+    filtrar();
+
+
+    // ------------------------------------
+    // SI VIENE DIRECTAMENTE A UNA EXCUSA
+    // ------------------------------------
 
     if(window.location.hash){
 
@@ -396,16 +424,13 @@ filtrar();
 
         if(fila){
 
-            // Mostrar la fila aunque algún filtro la estuviera ocultando
             fila.style.display = "";
 
-            // Llevar directamente hasta la excusa
             fila.scrollIntoView({
                 behavior: "smooth",
                 block: "center"
             });
 
-            // Resaltar temporalmente el registro
             fila.style.background = "#fff3cd";
             fila.style.outline = "3px solid #ffc107";
 
