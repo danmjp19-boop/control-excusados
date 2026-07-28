@@ -217,7 +217,7 @@ def login():
     return render_template("login.html")
 
 @app.route("/admin")
-@login_require
+@login_required
 def admin():
 
     from datetime import datetime
