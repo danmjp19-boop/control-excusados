@@ -339,10 +339,8 @@ def excusas():
 
             contenido = archivo.read()
 
-            # Crear identificador temporal para la imagen
             imagen_id = str(uuid.uuid4())
 
-            # Guardar temporalmente la imagen en el servidor
             ruta_temporal = os.path.join(
                 tempfile.gettempdir(),
                 imagen_id + ".jpg"
@@ -351,7 +349,6 @@ def excusas():
             with open(ruta_temporal, "wb") as f:
                 f.write(contenido)
 
-            # Procesar imagen con Google Vision
             info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
             credentials = service_account.Credentials.from_service_account_info(info)
 
@@ -374,12 +371,12 @@ def excusas():
 
                 if existe:
 
-    return render_template(
-        "resultado.html",
-        datos=datos,
-        imagen_id=imagen_id,
-        mensaje=True
-    )
+                    return render_template(
+                        "resultado.html",
+                        datos=datos,
+                        imagen_id=imagen_id,
+                        mensaje=True
+                    )
 
             return render_template(
                 "resultado.html",
@@ -388,7 +385,6 @@ def excusas():
             )
 
     return render_template("excusas.html")
-
 
 @app.route("/guardar_excusa", methods=["POST"])
 def guardar_excusa():
