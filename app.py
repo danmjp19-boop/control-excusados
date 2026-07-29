@@ -485,6 +485,9 @@ def lista_excusas():
 
     pagina = request.args.get("pagina", 1, type=int)
 
+    estado = request.args.get("estado", "")
+    mostrar = request.args.get("mostrar", "")
+
     paginacion = (
         Excusa.query
         .order_by(Excusa.id.desc())
@@ -511,10 +514,12 @@ def lista_excusas():
             e.dias_restantes = "-"
 
     return render_template(
-        "lista_excusas.html",
-        excusas=excusas,
-        paginacion=paginacion
-    )
+    "lista_excusas.html",
+    excusas=excusas,
+    paginacion=paginacion,
+    estado=estado,
+    mostrar=mostrar
+)
 
 @app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
 def editar_excusa(id):
