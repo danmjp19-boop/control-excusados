@@ -393,14 +393,19 @@ def guardar_excusa():
             with open(ruta_temporal, "rb") as f:
                 imagen_bytes = f.read()
 
-            # Borrar archivo temporal después de recuperarlo
             os.remove(ruta_temporal)
+
+    orden = request.form["orden"].strip()
+
+    # Verificar si la orden ya existe
+    if Excusa.query.filter_by(orden=orden).first():
+        return f"La orden No. {orden} ya se encuentra registrada."
 
     excusa = Excusa(
         nombre=request.form["nombre"],
         cedula=request.form["cedula"],
         cai=request.form["cai"],
-        orden=request.form["orden"],
+        orden=orden,
         fecha_inicio=request.form["fecha_inicio"],
         fecha_final=request.form["fecha_final"],
         dias=request.form["dias"],
@@ -411,7 +416,6 @@ def guardar_excusa():
     db.session.commit()
 
     return redirect(url_for("excusas"))
-
 
 @app.route("/ver_excusa/<int:id>")
 def ver_excusa(id):
