@@ -42,6 +42,27 @@ h2{
     margin-bottom:30px;
 }
 
+.alerta{
+    background:#fdecea;
+    border:2px solid #dc3545;
+    color:#842029;
+    padding:18px;
+    border-radius:10px;
+    margin-bottom:25px;
+    text-align:center;
+}
+
+.alerta h3{
+    margin:0 0 10px;
+    font-size:24px;
+}
+
+.alerta p{
+    margin:0;
+    font-size:17px;
+    line-height:1.6;
+}
+
 label{
     display:block;
     margin-bottom:6px;
@@ -80,6 +101,11 @@ button:hover{
     background:#157347;
 }
 
+button:disabled{
+    background:#6c757d;
+    cursor:not-allowed;
+}
+
 </style>
 
 </head>
@@ -92,8 +118,22 @@ button:hover{
 
 <h2>Nueva Excusa Médica</h2>
 
+{% if mensaje %}
+<div class="alerta">
+    <h3>⚠️ Excusa ya registrada</h3>
+
+    <p>
+        La orden No. <strong>{{ datos.orden }}</strong> ya se encuentra registrada en el sistema.
+        <br><br>
+        Verifique la información antes de continuar.
+    </p>
+</div>
+{% endif %}
+
 <form action="/guardar_excusa" method="POST">
+
 <input type="hidden" name="imagen_id" value="{{ imagen_id }}">
+
 <label>👤 Nombre completo</label>
 <input type="text" name="nombre" value="{{ datos.nombre }}">
 
@@ -102,9 +142,7 @@ button:hover{
 
 <label>🏢 CAI / Dependencia</label>
 
-<select name="cai" required
-        style="width:100%;padding:12px;font-size:16px;border:1px solid #ccc;border-radius:8px;margin-bottom:18px;box-sizing:border-box;">
-
+<select name="cai" required>
     <option value="">Seleccione CAI / Dependencia</option>
 
     <option value="CAI ANDES">CAI ANDES</option>
@@ -121,37 +159,21 @@ button:hover{
     <option value="CAI TIERRA LINDA">CAI TIERRA LINDA</option>
     <option value="CAI VILLA DEL PRADO">CAI VILLA DEL PRADO</option>
     <option value="ESTACION DE POLICIA SUBA">ESTACION DE POLICIA SUBA</option>
-
 </select>
 
 <label>📄 Número de orden</label>
 <input type="text" name="orden" value="{{ datos.orden }}">
 
 <label>📅 Fecha inicial</label>
-<input
-    type="date"
-    id="fecha_inicio"
-    name="fecha_inicio"
-    value="{{ datos.fecha_inicio }}"
-    onchange="calcularDias()">
+<input type="date" id="fecha_inicio" name="fecha_inicio" value="{{ datos.fecha_inicio }}" onchange="calcularDias()">
 
 <label>📅 Fecha final</label>
-<input
-    type="date"
-    id="fecha_final"
-    name="fecha_final"
-    value="{{ datos.fecha_final }}"
-    onchange="calcularDias()">
+<input type="date" id="fecha_final" name="fecha_final" value="{{ datos.fecha_final }}" onchange="calcularDias()">
 
 <label>📆 Número de días</label>
-<input
-    type="number"
-    id="dias"
-    name="dias"
-    value="{{ datos.dias }}"
-    readonly>
+<input type="number" id="dias" name="dias" value="{{ datos.dias }}" readonly>
 
-<button type="submit">
+<button type="submit" {% if mensaje %}disabled{% endif %}>
 💾 Guardar Excusa
 </button>
 
@@ -166,43 +188,31 @@ button:hover{
 </div>
 
 <script>
-
 function calcularDias(){
 
-    const inicio = document.getElementById("fecha_inicio").value;
-    const final = document.getElementById("fecha_final").value;
-    const campoDias = document.getElementById("dias");
+    const inicio=document.getElementById("fecha_inicio").value;
+    const final=document.getElementById("fecha_final").value;
+    const campoDias=document.getElementById("dias");
 
     if(!inicio || !final){
-        campoDias.value = "";
+        campoDias.value="";
         return;
     }
 
-    const fechaInicio = new Date(inicio + "T00:00:00");
-    const fechaFinal = new Date(final + "T00:00:00");
+    const fechaInicio=new Date(inicio+"T00:00:00");
+    const fechaFinal=new Date(final+"T00:00:00");
 
-    if(fechaFinal < fechaInicio){
-
-        campoDias.value = "";
-
+    if(fechaFinal<fechaInicio){
+        campoDias.value="";
         alert("La fecha final no puede ser anterior a la fecha inicial.");
-
         return;
     }
 
-    const diferencia = fechaFinal - fechaInicio;
-
-    const dias = Math.floor(
-        diferencia / (1000 * 60 * 60 * 24)
-    ) + 1;
-
-    campoDias.value = dias;
+    const dias=Math.floor((fechaFinal-fechaInicio)/(1000*60*60*24))+1;
+    campoDias.value=dias;
 }
 
-/* Calcula automáticamente al abrir la página
-   si la IA ya extrajo ambas fechas */
-window.addEventListener("load", calcularDias);
-
+window.addEventListener("load",calcularDias);
 </script>
 
 </body>
