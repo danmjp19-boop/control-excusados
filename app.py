@@ -374,10 +374,12 @@ def excusas():
 
                 if existe:
 
-                    return render_template(
-                        "excusas.html",
-                        mensaje=f"La orden No. {datos['orden']} ya se encuentra registrada."
-                    )
+    return render_template(
+        "resultado.html",
+        datos=datos,
+        imagen_id=imagen_id,
+        mensaje=True
+    )
 
             return render_template(
                 "resultado.html",
