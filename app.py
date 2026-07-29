@@ -483,7 +483,15 @@ def lista_excusas():
 
     from datetime import datetime
 
-    excusas = Excusa.query.order_by(Excusa.id.desc()).all()
+    pagina = request.args.get("pagina", 1, type=int)
+
+    paginacion = (
+        Excusa.query
+        .order_by(Excusa.id.desc())
+        .paginate(page=pagina, per_page=50, error_out=False)
+    )
+
+    excusas = paginacion.items
 
     hoy = datetime.now().date()
 
@@ -504,7 +512,8 @@ def lista_excusas():
 
     return render_template(
         "lista_excusas.html",
-        excusas=excusas
+        excusas=excusas,
+        paginacion=paginacion
     )
 
 @app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
