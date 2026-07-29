@@ -4,6 +4,7 @@ import re
 import base64
 import uuid
 import tempfile
+from sqlalchemy.orm import deferred
 from functools import wraps
 
 from flask import Flask, render_template, request, redirect, url_for, session, Response, send_file
@@ -57,7 +58,7 @@ class Excusa(db.Model):
     fecha_final = db.Column(db.String(20))
     dias = db.Column(db.String(10))
     fecha_registro = db.Column(db.DateTime, default=db.func.now())
-    imagen = db.Column(db.LargeBinary, nullable=True)
+    imagen = deferred(db.Column(db.LargeBinary, nullable=True))
 
 class Novedad(db.Model):
 
