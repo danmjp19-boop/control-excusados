@@ -190,6 +190,28 @@ onkeyup="filtrar()">
     </button>
 
 </form>
+
+    <div style="display:flex;justify-content:center;gap:10px;margin:20px 0;">
+
+{% if paginacion.has_prev %}
+<a href="{{ url_for('lista_excusas', pagina=paginacion.prev_num) }}"
+style="padding:8px 15px;background:#0b5ed7;color:white;text-decoration:none;border-radius:6px;">
+⬅ Anterior
+</a>
+{% endif %}
+
+<span style="padding:8px 15px;font-weight:bold;">
+Página {{ paginacion.page }} de {{ paginacion.pages }}
+</span>
+
+{% if paginacion.has_next %}
+<a href="{{ url_for('lista_excusas', pagina=paginacion.next_num) }}"
+style="padding:8px 15px;background:#0b5ed7;color:white;text-decoration:none;border-radius:6px;">
+Siguiente ➡
+</a>
+{% endif %}
+
+</div>
     
 <table id="tabla">
 
