@@ -365,11 +365,25 @@ def excusas():
 
             datos = extraer_datos(texto)
 
-            return render_template(
-                "resultado.html",
-                datos=datos,
-                imagen_id=imagen_id
-            )
+# Verificar si la orden ya existe
+if datos["orden"]:
+
+    existe = Excusa.query.filter_by(
+        orden=datos["orden"]
+    ).first()
+
+    if existe:
+
+        return render_template(
+            "excusas.html",
+            mensaje=f"La orden No. {datos['orden']} ya se encuentra registrada."
+        )
+
+return render_template(
+    "resultado.html",
+    datos=datos,
+    imagen_id=imagen_id
+)
 
     return render_template("excusas.html")
 
