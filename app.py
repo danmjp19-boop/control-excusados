@@ -514,6 +514,7 @@ def descargar_excel():
 def lista_excusas():
 
     from datetime import datetime
+    from zoneinfo import ZoneInfo
 
     pagina = request.args.get("pagina", 1, type=int)
 
@@ -528,11 +529,16 @@ def lista_excusas():
 
     excusas = paginacion.items
 
-    hoy = datetime.now().date()
+    # Hora oficial de Colombia
+    hoy = datetime.now(ZoneInfo("America/Bogota")).date()
 
     for e in excusas:
         try:
-            fecha_final = datetime.strptime(e.fecha_final, "%Y-%m-%d").date()
+            fecha_final = datetime.strptime(
+                e.fecha_final,
+                "%Y-%m-%d"
+            ).date()
+
             restantes = (fecha_final - hoy).days
 
             if restantes < 0:
@@ -546,12 +552,12 @@ def lista_excusas():
             e.dias_restantes = "-"
 
     return render_template(
-    "lista_excusas.html",
-    excusas=excusas,
-    paginacion=paginacion,
-    estado=estado,
-    mostrar=mostrar
-)
+        "lista_excusas.html",
+        excusas=excusas,
+        paginacion=paginacion,
+        estado=estado,
+        mostrar=mostrar
+    )
 
 @app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
 def editar_excusa(id):
