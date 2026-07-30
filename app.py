@@ -58,6 +58,7 @@ class Excusa(db.Model):
     fecha_final = db.Column(db.String(20))
     dias = db.Column(db.String(10))
     fecha_registro = db.Column(db.DateTime, default=db.func.now())
+    entregada = db.Column(db.Boolean, default=False, nullable=False)
     imagen = deferred(db.Column(db.LargeBinary, nullable=True))
 
 class Novedad(db.Model):
@@ -216,6 +217,21 @@ def login():
         return "Usuario o contraseña incorrectos"
 
     return render_template("login.html")
+
+@app.route("/crear_columna_entregada")
+def crear_columna_entregada():
+
+    try:
+        db.session.execute(
+            db.text(
+                "ALTER TABLE excusa ADD COLUMN IF NOT EXISTS entregada BOOLEAN DEFAULT FALSE"
+            )
+        )
+        db.session.commit()
+        return "Columna creada correctamente."
+    except Exception as e:
+        db.session.rollback()
+        return str(e)
 
 @app.route("/admin")
 @login_required
