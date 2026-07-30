@@ -291,6 +291,15 @@ Siguiente ➡
     </a>
 
     |
+    <a href="/cambiar_entrega/{{ e.id }}">
+{% if e.entregada %}
+📦 Marcar NO entregada
+{% else %}
+📦 Marcar entregada
+{% endif %}
+</a>
+
+    |
 
     <a href="/eliminar_excusa/{{ e.id }}"
        onclick="return confirm('¿Seguro que desea eliminar esta excusa?')">
