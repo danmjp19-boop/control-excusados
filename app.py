@@ -128,7 +128,7 @@ with app.app_context():
     )
     db.session.commit()
     print("Columna ENTREGADA verificada correctamente")
-except Exception as e:
+    except Exception as e:
     db.session.rollback()
     print("Error verificando columna ENTREGADA:", e)
 
