@@ -291,12 +291,17 @@ Siguiente ➡
     </a>
 
     |
-    <a href="/cambiar_entrega/{{ e.id }}">
+    <a href="#"
+   onclick="cambiarEntrega({{ e.id }}); return false;">
+
+<span id="texto-entrega-{{ e.id }}">
 {% if e.entregada %}
 📦 Marcar NO entregada
 {% else %}
 📦 Marcar entregada
 {% endif %}
+</span>
+
 </a>
 
     |
