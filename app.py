@@ -58,6 +58,7 @@ class Excusa(db.Model):
     fecha_final = db.Column(db.String(20))
     dias = db.Column(db.String(10))
     fecha_registro = db.Column(db.DateTime, default=db.func.now())
+    entregada = db.Column(db.Boolean, default=False, nullable=False)
     imagen = deferred(db.Column(db.LargeBinary, nullable=True))
 
 class Novedad(db.Model):
@@ -118,6 +119,18 @@ with app.app_context():
     except Exception as e:
         db.session.rollback()
         print("Error creando columna imagen:", e)
+
+    try:
+    db.session.execute(
+        db.text(
+            "ALTER TABLE excusa ADD COLUMN IF NOT EXISTS entregada BOOLEAN DEFAULT FALSE"
+        )
+    )
+    db.session.commit()
+    print("Columna ENTREGADA verificada correctamente")
+except Exception as e:
+    db.session.rollback()
+    print("Error verificando columna ENTREGADA:", e)
 
     admins = Usuario.query.filter_by(cedula="TAHUM-E11").all()
 
