@@ -487,6 +487,38 @@ window.addEventListener("load", function(){
 
 });
 
+   async function cambiarEntrega(id){
+
+    const respuesta = await fetch("/cambiar_entrega/" + id);
+
+    const datos = await respuesta.json();
+
+    if(!datos.ok){
+        alert("No fue posible actualizar.");
+        return;
+    }
+
+    const columna = document.querySelector("#excusa-" + id + " td:nth-child(10)");
+    const texto = document.getElementById("texto-entrega-" + id);
+
+    if(datos.entregada){
+
+        columna.innerHTML =
+        '<span style="color:#198754;font-weight:bold;">✅ Sí</span>';
+
+        texto.innerHTML = "📦 Marcar NO entregada";
+
+    }else{
+
+        columna.innerHTML =
+        '<span style="color:#dc3545;font-weight:bold;">❌ No</span>';
+
+        texto.innerHTML = "📦 Marcar entregada";
+
+    }
+
+} 
+
 </script>
 </body>
 </html>
