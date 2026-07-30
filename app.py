@@ -121,7 +121,7 @@ with app.app_context():
         print("Error creando columna imagen:", e)
 
     try:
-    db.session.execute(
+        db.session.execute(
         db.text(
             "ALTER TABLE excusa ADD COLUMN IF NOT EXISTS entregada BOOLEAN DEFAULT FALSE"
         )
@@ -129,7 +129,7 @@ with app.app_context():
     db.session.commit()
     print("Columna ENTREGADA verificada correctamente")
     except Exception as e:
-    db.session.rollback()
+        db.session.rollback()
     print("Error verificando columna ENTREGADA:", e)
 
     admins = Usuario.query.filter_by(cedula="TAHUM-E11").all()
