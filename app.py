@@ -111,7 +111,7 @@ with app.app_context():
         db.session.rollback()
         print("Error verificando columna CAI:", e)
 
-    try:
+        try:
         db.session.execute(
             db.text("ALTER TABLE excusa ADD COLUMN IF NOT EXISTS imagen BYTEA")
         )
@@ -120,7 +120,7 @@ with app.app_context():
         db.session.rollback()
         print("Error creando columna imagen:", e)
 
-        try:
+    try:
         db.session.execute(
             db.text(
                 "ALTER TABLE excusa ADD COLUMN IF NOT EXISTS entregada BOOLEAN DEFAULT FALSE"
