@@ -590,8 +590,12 @@ def eliminar_excusa(id):
 @app.route("/cambiar_entrega/<int:id>")
 def cambiar_entrega(id):
 
+    from flask import jsonify
+
     if session.get("rol") != "Administrador":
-        return redirect(url_for("lista_excusas"))
+        return jsonify({
+            "ok": False
+        }), 403
 
     excusa = Excusa.query.get_or_404(id)
 
@@ -599,7 +603,10 @@ def cambiar_entrega(id):
 
     db.session.commit()
 
-    return redirect(url_for("lista_excusas"))
+    return jsonify({
+        "ok": True,
+        "entregada": excusa.entregada
+    })
 
 @app.route("/crear_novedad/<int:id>", methods=["GET", "POST"])
 def crear_novedad(id):
