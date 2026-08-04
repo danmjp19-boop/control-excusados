@@ -524,7 +524,25 @@ window.addEventListener("load", function(){
 
     }
 
-} 
+}
+
+    function buscarServidor(){
+
+    const buscar = document.getElementById("buscar").value;
+
+    const url = new URL(window.location.href);
+
+    if(buscar.trim() !== ""){
+        url.searchParams.set("buscar", buscar);
+    }else{
+        url.searchParams.delete("buscar");
+    }
+
+    url.searchParams.set("pagina", 1);
+
+    window.location.href = url.toString();
+
+}
 
 </script>
 </body>
