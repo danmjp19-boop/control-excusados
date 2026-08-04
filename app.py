@@ -521,13 +521,26 @@ def lista_excusas():
     estado = request.args.get("estado", "")
     mostrar = request.args.get("mostrar", "")
 
-    paginacion = (
-        Excusa.query
-        .order_by(Excusa.id.desc())
-        .paginate(page=pagina, per_page=50, error_out=False)
+    buscar = request.args.get("buscar", "").strip()
+
+consulta = Excusa.query
+
+if buscar:
+    consulta = consulta.filter(
+        db.or_(
+            Excusa.nombre.ilike(f"%{buscar}%"),
+            Excusa.cedula.ilike(f"%{buscar}%"),
+            Excusa.orden.ilike(f"%{buscar}%")
+        )
     )
 
-    excusas = paginacion.items
+paginacion = (
+    consulta
+    .order_by(Excusa.id.desc())
+    .paginate(page=pagina, per_page=50, error_out=False)
+)
+
+excusas = paginacion.items
 
     # Hora oficial de Colombia
     hoy = datetime.now(ZoneInfo("America/Bogota")).date()
