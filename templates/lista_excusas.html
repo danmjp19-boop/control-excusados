@@ -95,9 +95,11 @@ tr:hover{
 <input
 type="text"
 id="buscar"
+name="buscar"
 class="buscador"
-placeholder="🔍 Buscar por nombre o cédula..."
-onkeyup="filtrar()">
+placeholder="🔍 Buscar por nombre, cédula u orden..."
+value="{{ request.args.get('buscar','') }}"
+onkeydown="if(event.key==='Enter'){ buscarServidor(); }">
 
     <select id="filtroEstado"
         onchange="filtrar()"
