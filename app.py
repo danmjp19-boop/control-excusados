@@ -520,19 +520,18 @@ def lista_excusas():
 
     estado = request.args.get("estado", "")
     mostrar = request.args.get("mostrar", "")
-
     buscar = request.args.get("buscar", "").strip()
 
-consulta = Excusa.query
+    consulta = Excusa.query
 
-if buscar:
-    consulta = consulta.filter(
-        db.or_(
-            Excusa.nombre.ilike(f"%{buscar}%"),
-            Excusa.cedula.ilike(f"%{buscar}%"),
-            Excusa.orden.ilike(f"%{buscar}%")
+    if buscar:
+        consulta = consulta.filter(
+            db.or_(
+                Excusa.nombre.ilike(f"%{buscar}%"),
+                Excusa.cedula.ilike(f"%{buscar}%"),
+                Excusa.orden.ilike(f"%{buscar}%")
+            )
         )
-    )
 
     paginacion = (
         consulta
