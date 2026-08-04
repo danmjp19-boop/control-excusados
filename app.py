@@ -542,35 +542,35 @@ paginacion = (
 
 excusas = paginacion.items
 
-    # Hora oficial de Colombia
-    hoy = datetime.now(ZoneInfo("America/Bogota")).date()
+# Hora oficial de Colombia
+hoy = datetime.now(ZoneInfo("America/Bogota")).date()
 
-    for e in excusas:
-        try:
-            fecha_final = datetime.strptime(
-                e.fecha_final,
-                "%Y-%m-%d"
-            ).date()
+for e in excusas:
+    try:
+        fecha_final = datetime.strptime(
+            e.fecha_final,
+            "%Y-%m-%d"
+        ).date()
 
-            restantes = (fecha_final - hoy).days
+        restantes = (fecha_final - hoy).days
 
-            if restantes < 0:
-                e.dias_restantes = "Finalizada"
-            elif restantes == 0:
-                e.dias_restantes = "Finaliza hoy"
-            else:
-                e.dias_restantes = restantes
+        if restantes < 0:
+            e.dias_restantes = "Finalizada"
+        elif restantes == 0:
+            e.dias_restantes = "Finaliza hoy"
+        else:
+            e.dias_restantes = restantes
 
-        except:
-            e.dias_restantes = "-"
+    except:
+        e.dias_restantes = "-"
 
-    return render_template(
-        "lista_excusas.html",
-        excusas=excusas,
-        paginacion=paginacion,
-        estado=estado,
-        mostrar=mostrar
-    )
+return render_template(
+    "lista_excusas.html",
+    excusas=excusas,
+    paginacion=paginacion,
+    estado=estado,
+    mostrar=mostrar
+)
 
 @app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
 def editar_excusa(id):
