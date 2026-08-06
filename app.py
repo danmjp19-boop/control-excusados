@@ -535,13 +535,16 @@ def lista_excusas():
                 Excusa.orden.ilike(f"%{buscar}%")
             )
         )
-    else:
-        hoy = datetime.now(ZoneInfo("America/Bogota"))
+    consulta = Excusa.query
 
+    if buscar:
         consulta = consulta.filter(
-            db.extract("year", Excusa.fecha_registro) == hoy.year,
-            db.extract("month", Excusa.fecha_registro) == hoy.month
+            db.or_(
+                Excusa.nombre.ilike(f"%{buscar}%"),
+                Excusa.cedula.ilike(f"%{buscar}%"),
+                Excusa.orden.ilike(f"%{buscar}%")
         )
+    )
 
     paginacion = (
         consulta
