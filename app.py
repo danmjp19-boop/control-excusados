@@ -504,13 +504,13 @@ def descargar_excel():
     archivo.seek(0)
 
     return send_file(
-        archivo,
-        as_attachment=True,
-        download_name="reporte_excusas.xlsx",
-        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+    archivo,
+    as_attachment=True,
+    download_name="reporte_excusas.xlsx",
+    mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
 
-    @app.route("/lista_excusas")
+@app.route("/lista_excusas")
 def lista_excusas():
 
     from datetime import datetime
