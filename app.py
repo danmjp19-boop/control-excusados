@@ -510,6 +510,21 @@ def descargar_excel():
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
+    @app.route("/lista_excusas")
+def lista_excusas():
+
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    pagina = request.args.get("pagina", 1, type=int)
+
+    estado = request.args.get("estado", "")
+    mostrar = request.args.get("mostrar", "")
+    buscar = request.args.get("buscar", "").strip()
+    anio = request.args.get("anio", "")
+    mes = request.args.get("mes", "")
+    cai = request.args.get("cai", "")
+
     consulta = Excusa.query
 
     if buscar:
@@ -521,7 +536,6 @@ def descargar_excel():
             )
         )
     else:
-        # Si NO está buscando, mostrar solo el mes actual
         hoy = datetime.now(ZoneInfo("America/Bogota"))
 
         consulta = consulta.filter(
@@ -533,6 +547,38 @@ def descargar_excel():
         consulta
         .order_by(Excusa.id.desc())
         .paginate(page=pagina, per_page=50, error_out=False)
+    )
+
+    excusas = paginacion.items
+
+    hoy = datetime.now(ZoneInfo("America/Bogota")).date()
+
+    for e in excusas:
+        try:
+            fecha_final = datetime.strptime(
+                e.fecha_final,
+                "%Y-%m-%d"
+            ).date()
+
+            restantes = (fecha_final - hoy).days
+
+            if restantes < 0:
+                e.dias_restantes = "Finalizada"
+            elif restantes == 0:
+                e.dias_restantes = "Finaliza hoy"
+            else:
+                e.dias_restantes = restantes
+
+        except:
+            e.dias_restantes = "-"
+
+    return render_template(
+        "lista_excusas.html",
+        excusas=excusas,
+        paginacion=paginacion,
+        estado=estado,
+        mostrar=mostrar,
+        buscar=buscar
     )
 @app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
 def editar_excusa(id):
