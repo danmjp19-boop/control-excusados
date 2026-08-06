@@ -521,6 +521,10 @@ def lista_excusas():
     estado = request.args.get("estado", "")
     mostrar = request.args.get("mostrar", "")
     buscar = request.args.get("buscar", "").strip()
+    anio = request.args.get("anio", "")
+    mes = request.args.get("mes", "")
+    cai = request.args.get("cai", "")
+    estado = request.args.get("estado", "")
 
     consulta = Excusa.query
 
@@ -532,6 +536,16 @@ def lista_excusas():
                 Excusa.orden.ilike(f"%{buscar}%")
             )
         )
+
+    # Si NO está buscando, mostrar solo el mes actual
+if not buscar:
+
+    hoy = datetime.now(ZoneInfo("America/Bogota"))
+
+    consulta = consulta.filter(
+        db.extract("year", Excusa.fecha_registro) == hoy.year,
+        db.extract("month", Excusa.fecha_registro) == hoy.month
+    )
 
     paginacion = (
         consulta
