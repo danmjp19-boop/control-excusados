@@ -578,13 +578,13 @@ if not buscar:
             e.dias_restantes = "-"
 
     return render_template(
-    "lista_excusas.html",
-    excusas=excusas,
-    paginacion=paginacion,
-    estado=estado,
-    mostrar=mostrar,
-    buscar=buscar
-)
+        "lista_excusas.html",
+        excusas=excusas,
+        paginacion=paginacion,
+        estado=estado,
+        mostrar=mostrar,
+        buscar=buscar
+    )
 @app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
 def editar_excusa(id):
     if session.get("rol") != "Administrador":
