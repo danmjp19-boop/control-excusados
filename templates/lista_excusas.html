@@ -528,20 +528,19 @@ window.addEventListener("load", function(){
 
     function buscarServidor(){
 
-    const buscar = document.getElementById("buscar").value;
+    const buscar = document.getElementById("buscar").value.trim();
+
+    if(buscar === ""){
+        window.location.href = "/lista_excusas";
+        return;
+    }
 
     const url = new URL(window.location.href);
 
-    if(buscar.trim() !== ""){
-        url.searchParams.set("buscar", buscar);
-    }else{
-        url.searchParams.delete("buscar");
-    }
-
+    url.searchParams.set("buscar", buscar);
     url.searchParams.set("pagina", 1);
 
     window.location.href = url.toString();
-
 }
 
 </script>
