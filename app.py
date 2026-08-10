@@ -525,7 +525,16 @@ def lista_excusas():
     mes = request.args.get("mes", "")
     cai = request.args.get("cai", "")
 
+    # ==========================================
+    # CONSULTA GENERAL
+    # ==========================================
+
     consulta = Excusa.query
+
+    # ==========================================
+    # BÚSQUEDA GLOBAL
+    # Busca en TODA la base de datos
+    # ==========================================
 
     if buscar:
         consulta = consulta.filter(
@@ -535,45 +544,64 @@ def lista_excusas():
                 Excusa.orden.ilike(f"%{buscar}%")
             )
         )
-    consulta = Excusa.query
 
-    if buscar:
-        consulta = consulta.filter(
-            db.or_(
-                Excusa.nombre.ilike(f"%{buscar}%"),
-                Excusa.cedula.ilike(f"%{buscar}%"),
-                Excusa.orden.ilike(f"%{buscar}%")
-        )
-    )
+    # ==========================================
+    # ORDEN Y PAGINACIÓN
+    # ==========================================
 
     paginacion = (
         consulta
         .order_by(Excusa.id.desc())
-        .paginate(page=pagina, per_page=50, error_out=False)
+        .paginate(
+            page=pagina,
+            per_page=50,
+            error_out=False
+        )
     )
 
     excusas = paginacion.items
 
-    hoy = datetime.now(ZoneInfo("America/Bogota")).date()
+    # ==========================================
+    # CALCULAR DÍAS RESTANTES
+    # HORA OFICIAL DE COLOMBIA
+    # ==========================================
+
+    hoy = datetime.now(
+        ZoneInfo("America/Bogota")
+    ).date()
 
     for e in excusas:
+
         try:
+
             fecha_final = datetime.strptime(
                 e.fecha_final,
                 "%Y-%m-%d"
             ).date()
 
-            restantes = (fecha_final - hoy).days
+            restantes = (
+                fecha_final - hoy
+            ).days
 
             if restantes < 0:
+
                 e.dias_restantes = "Finalizada"
+
             elif restantes == 0:
+
                 e.dias_restantes = "Finaliza hoy"
+
             else:
+
                 e.dias_restantes = restantes
 
         except:
+
             e.dias_restantes = "-"
+
+    # ==========================================
+    # MOSTRAR LISTADO
+    # ==========================================
 
     return render_template(
         "lista_excusas.html",
@@ -583,6 +611,7 @@ def lista_excusas():
         mostrar=mostrar,
         buscar=buscar
     )
+
 @app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
 def editar_excusa(id):
     if session.get("rol") != "Administrador":
