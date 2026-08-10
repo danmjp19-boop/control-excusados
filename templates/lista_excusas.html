@@ -390,15 +390,20 @@ function filtrar(){
             estadoSeleccionado === "" ||
             estadoFila === estadoSeleccionado;
 
+        const hayBusqueda = texto.trim() !== "";
+
         const coincideAnio =
+            hayBusqueda ||
             anioSeleccionado === "" ||
             anioFila === anioSeleccionado;
 
         const coincideMes =
+            hayBusqueda ||
             mesSeleccionado === "" ||
             mesFila === mesSeleccionado;
 
         const coincideCai =
+            hayBusqueda ||
             caiSeleccionado === "" ||
             caiFila === caiSeleccionado;
 
