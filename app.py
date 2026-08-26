@@ -129,7 +129,7 @@ with app.app_context():
             nombres="Administrador",
             apellidos="Sistema",
             cedula="TAHUM-E11",
-            password="Nueva321+",
+            password="Nueva123+",
             rol="Administrador",
             unidad="ESTACION DE POLICIA SUBA",
             cai="CAI ANDES",
