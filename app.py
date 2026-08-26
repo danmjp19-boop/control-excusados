@@ -48,6 +48,16 @@ class Usuario(db.Model):
     cai = db.Column(db.String(100), nullable=False)
     estado = db.Column(db.String(20), default="Activo")
 
+class Personal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    grado = db.Column(db.String(50), nullable=True)
+    nombres = db.Column(db.String(100), nullable=False)
+    apellidos = db.Column(db.String(100), nullable=False)
+    cedula = db.Column(db.String(20), unique=True, nullable=False)
+    telefono = db.Column(db.String(30), nullable=True)
+    correo = db.Column(db.String(150), nullable=True)
+    cai = db.Column(db.String(150), nullable=True)
+
 class Excusa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(150), nullable=False)
