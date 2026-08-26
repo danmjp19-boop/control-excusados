@@ -534,10 +534,7 @@ def descargar_excel():
             restantes = ""
 
         # DETERMINAR SI TIENE SOPORTE FÍSICO
-        if e.imagen:
-            fisica = "Sí"
-        else:
-            fisica = "No"
+        fisica = "Sí" if e.entregada else "No"
 
         ws.append([
             e.id,
