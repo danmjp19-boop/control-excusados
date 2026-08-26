@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Importar Personal</title>
+
+<style>
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:25px;
+}
+
+.contenedor{
+    max-width:600px;
+    margin:60px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.12);
+}
+
+h2{
+    text-align:center;
+    color:#0b5ed7;
+    margin-top:0;
+}
+
+p{
+    text-align:center;
+    color:#555;
+    line-height:1.5;
+}
+
+input[type="file"]{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin-top:15px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    background:#198754;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#157347;
+}
+
+.volver{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    text-decoration:none;
+    color:#0b5ed7;
+    font-weight:bold;
+}
+
+.info{
+    background:#e7f1ff;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+    font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <h2>📂 Importar Personal</h2>
+
+    <p>
+        Seleccione el archivo Excel que contiene la información
+        del personal.
+    </p>
+
+    <form action="/importar_personal" method="POST" enctype="multipart/form-data">
+
+        <input
+            type="file"
+            name="archivo"
+            accept=".xlsx"
+            required
+        >
+
+        <button type="submit">
+            📥 Importar Excel
+        </button>
+
+    </form>
+
+    <div class="info">
+        <strong>Columnas esperadas:</strong><br><br>
+        GR, APELLIDOS, NOMBRES, CC, CELULAR,
+        Correo Electrónico y DEPENDENCIA.
+    </div>
+
+    <a href="/panel_admin" class="volver">
+        ← Regresar al Panel
+    </a>
+
+</div>
+
+</body>
+</html>
