@@ -585,6 +585,13 @@ def lista_excusas():
     mes = request.args.get("mes", "")
     cai = request.args.get("cai", "")
 
+    @app.route("/importar_personal")
+def importar_personal():
+    if session.get("rol") != "Administrador":
+        return "No autorizado", 403
+
+    return render_template("importar_personal.html")
+
     # ==========================================
     # CONSULTA GENERAL
     # ==========================================
