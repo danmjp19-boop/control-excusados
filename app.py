@@ -476,6 +476,8 @@ def ver_excusa(id):
 @app.route("/descargar_excel")
 def descargar_excel():
 
+    from datetime import datetime, date
+
     fecha_desde = request.args.get("desde")
     fecha_hasta = request.args.get("hasta")
 
@@ -493,25 +495,61 @@ def descargar_excel():
     ws = wb.active
     ws.title = "Reporte de Excusas"
 
+    # COLUMNAS DEL EXCEL
     ws.append([
         "ID",
         "Nombre",
         "Cédula",
-        "Número de Orden",
-        "Fecha Inicial",
-        "Fecha Final",
-        "Número de Días"
+        "CAI",
+        "Orden",
+        "Inicio",
+        "Final",
+        "Días",
+        "Restantes",
+        "Física"
     ])
 
+    hoy = date.today()
+
     for e in excusas:
+
+        # CALCULAR DÍAS RESTANTES
+        restantes = ""
+
+        try:
+            fecha_final = datetime.strptime(
+                e.fecha_final, "%Y-%m-%d"
+            ).date()
+
+            diferencia = (fecha_final - hoy).days
+
+            if diferencia < 0:
+                restantes = "Finalizada"
+            elif diferencia == 0:
+                restantes = "Hoy"
+            else:
+                restantes = f"{diferencia} días"
+
+        except (ValueError, TypeError):
+            restantes = ""
+
+        # DETERMINAR SI TIENE SOPORTE FÍSICO
+        if e.imagen:
+            fisica = "Sí"
+        else:
+            fisica = "No"
+
         ws.append([
             e.id,
             e.nombre,
             e.cedula,
+            e.cai,
             e.orden,
             e.fecha_inicio,
             e.fecha_final,
-            e.dias
+            e.dias,
+            restantes,
+            fisica
         ])
 
     archivo = BytesIO()
@@ -519,11 +557,11 @@ def descargar_excel():
     archivo.seek(0)
 
     return send_file(
-    archivo,
-    as_attachment=True,
-    download_name="reporte_excusas.xlsx",
-    mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-)
+        archivo,
+        as_attachment=True,
+        download_name="reporte_excusas.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 @app.route("/lista_excusas")
 def lista_excusas():
