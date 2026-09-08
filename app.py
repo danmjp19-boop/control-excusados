@@ -580,7 +580,7 @@ def importar_personal():
 @app.route("/lista_excusas")
 def lista_excusas():
 
-    from datetime import datetime
+    from datetime import datetime, timedelta
     from zoneinfo import ZoneInfo
 
     pagina = request.args.get("pagina", 1, type=int)
@@ -592,7 +592,13 @@ def lista_excusas():
     mes = request.args.get("mes", "")
     cai = request.args.get("cai", "")
 
-    
+    # ==========================================
+    # HORA OFICIAL DE COLOMBIA
+    # ==========================================
+
+    hoy = datetime.now(
+        ZoneInfo("America/Bogota")
+    ).date()
 
     # ==========================================
     # CONSULTA GENERAL
@@ -615,6 +621,71 @@ def lista_excusas():
         )
 
     # ==========================================
+    # FILTRO DE ESTADO
+    # ==========================================
+
+    if estado == "vigente":
+
+        consulta = consulta.filter(
+            Excusa.fecha_final >= hoy.strftime("%Y-%m-%d")
+        )
+
+    elif estado == "hoy":
+
+        consulta = consulta.filter(
+            Excusa.fecha_final == hoy.strftime("%Y-%m-%d")
+        )
+
+    elif estado == "finalizada":
+
+        consulta = consulta.filter(
+            Excusa.fecha_final < hoy.strftime("%Y-%m-%d")
+        )
+
+    elif estado == "presentacion":
+
+        # ==========================================
+        # PRESENTACIÓN HOY
+        # Excusas que terminaron AYER
+        # ==========================================
+
+        ayer = hoy - timedelta(days=1)
+
+        consulta = consulta.filter(
+            Excusa.fecha_final == ayer.strftime("%Y-%m-%d")
+        )
+
+    # ==========================================
+    # FILTRO POR AÑO
+    # ==========================================
+
+    if anio:
+
+        consulta = consulta.filter(
+            Excusa.fecha_inicio.like(f"{anio}-%")
+        )
+
+    # ==========================================
+    # FILTRO POR MES
+    # ==========================================
+
+    if mes:
+
+        consulta = consulta.filter(
+            Excusa.fecha_inicio.like(f"{anio}-{mes}%")
+        )
+
+    # ==========================================
+    # FILTRO POR CAI
+    # ==========================================
+
+    if cai:
+
+        consulta = consulta.filter(
+            Excusa.cai == cai
+        )
+
+    # ==========================================
     # ORDEN Y PAGINACIÓN
     # ==========================================
 
@@ -632,12 +703,7 @@ def lista_excusas():
 
     # ==========================================
     # CALCULAR DÍAS RESTANTES
-    # HORA OFICIAL DE COLOMBIA
     # ==========================================
-
-    hoy = datetime.now(
-        ZoneInfo("America/Bogota")
-    ).date()
 
     for e in excusas:
 
@@ -678,7 +744,10 @@ def lista_excusas():
         paginacion=paginacion,
         estado=estado,
         mostrar=mostrar,
-        buscar=buscar
+        buscar=buscar,
+        anio=anio,
+        mes=mes,
+        cai=cai
     )
 
 @app.route("/editar_excusa/<int:id>", methods=["GET", "POST"])
