@@ -694,7 +694,7 @@ def lista_excusas():
         .order_by(Excusa.id.desc())
         .paginate(
             page=pagina,
-            per_page=50,
+            per_page=100,
             error_out=False
         )
     )
