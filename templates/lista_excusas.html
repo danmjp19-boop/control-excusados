@@ -235,7 +235,8 @@ Siguiente ➡
 {% for e in excusas %}
 
 <tr id="excusa-{{ e.id }}"
-    data-estado="{% if e.dias_restantes == 'Finalizada' %}finalizada{% elif e.dias_restantes == 'Finaliza hoy' %}hoy{% else %}vigente{% endif %}">
+    data-estado="{% if e.dias_restantes == 'Finalizada' %}finalizada{% elif e.dias_restantes == 'Finaliza hoy' %}hoy{% else %}vigente{% endif %}"
+    data-fecha-final="{{ e.fecha_final }}">
 
 <td>{{ e.id }}</td>
 <td>{{ e.nombre }}</td>
@@ -345,6 +346,37 @@ function filtrar(){
 
         const estadoFila = fila.getAttribute("data-estado");
 
+                // Detectar PRESENTACIÓN HOY
+        const fechaFinal = fila.getAttribute("data-fecha-final");
+
+        const fechaHoy = new Date();
+        fechaHoy.setHours(0,0,0,0);
+
+        const fechaAyer = new Date(fechaHoy);
+        fechaAyer.setDate(fechaAyer.getDate() - 1);
+
+        let estadoReal = estadoFila;
+
+        if(fechaFinal){
+
+            const partes = fechaFinal.split("-");
+
+            if(partes.length === 3){
+
+                const fechaExcusa = new Date(
+                    parseInt(partes[0]),
+                    parseInt(partes[1]) - 1,
+                    parseInt(partes[2])
+                );
+
+                fechaExcusa.setHours(0,0,0,0);
+
+                if(fechaExcusa.getTime() === fechaAyer.getTime()){
+                    estadoReal = "presentacion";
+                }
+            }
+        }
+
         // Tomamos directamente la fecha de la columna INICIO
         let fecha = fila.cells[5].textContent.trim();
 
@@ -389,7 +421,7 @@ function filtrar(){
 
         const coincideEstado =
             estadoSeleccionado === "" ||
-            estadoFila === estadoSeleccionado;
+            estadoReal === estadoSeleccionado;
 
         const hayBusqueda = texto.trim() !== "";
 
