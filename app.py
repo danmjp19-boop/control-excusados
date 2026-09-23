@@ -62,6 +62,7 @@ class Excusa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(150), nullable=False)
     cedula = db.Column(db.String(20), nullable=False)
+    clase = db.Column(db.String(20), nullable=True)
     cai = db.Column(db.String(100), nullable=True)
     orden = db.Column(db.String(30))
     fecha_inicio = db.Column(db.String(20))
@@ -129,6 +130,15 @@ with app.app_context():
     except Exception as e:
         db.session.rollback()
         print("Error creando columna imagen:", e)
+        try:
+        db.session.execute(
+            db.text("ALTER TABLE excusa ADD COLUMN IF NOT EXISTS clase VARCHAR(20)")
+        )
+        db.session.commit()
+        print("Columna CLASE verificada correctamente")
+    except Exception as e:
+        db.session.rollback()
+        print("Error verificando columna CLASE:", e)
 
     admins = Usuario.query.filter_by(cedula="TAHUM-E11").all()
 
@@ -160,13 +170,14 @@ with app.app_context():
 def extraer_datos(texto):
 
     datos = {
-        "nombre": "",
-        "cedula": "",
-        "orden": "",
-        "fecha_inicio": "",
-        "fecha_final": "",
-        "dias": ""
-    }
+    "nombre": "",
+    "cedula": "",
+    "orden": "",
+    "fecha_inicio": "",
+    "fecha_final": "",
+    "dias": "",
+    "clase": ""
+}
 
     m = re.search(
         r"CC\s+(\d+)\s+([A-ZÁÉÍÓÚÑ ]+)",
@@ -196,6 +207,16 @@ def extraer_datos(texto):
     m = re.search(r"Número de días incapacidad\s*\n?(\d+)", texto)
     if m:
         datos["dias"] = m.group(1)
+
+        # Clase de incapacidad
+    m = re.search(
+        r"Clase\s*:\s*(TOTAL|PARCIAL)",
+        texto,
+        re.IGNORECASE
+    )
+
+    if m:
+        datos["clase"] = m.group(1).upper()
 
     return datos
 
