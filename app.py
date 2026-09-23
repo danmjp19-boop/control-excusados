@@ -130,7 +130,7 @@ with app.app_context():
     except Exception as e:
         db.session.rollback()
         print("Error creando columna imagen:", e)
-        try:
+    try:
         db.session.execute(
             db.text("ALTER TABLE excusa ADD COLUMN IF NOT EXISTS clase VARCHAR(20)")
         )
