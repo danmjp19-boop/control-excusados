@@ -165,18 +165,16 @@ with app.app_context():
             db.session.delete(usuario)
 
         db.session.commit()
+   def extraer_datos(texto):
 
-
-    def extraer_datos(texto):
-
-       datos = {
-       "nombre": "",
-       "cedula": "",
-       "orden": "",
-       "fecha_inicio": "",
-       "fecha_final": "",
-       "dias": "",
-       "clase": ""
+    datos = {
+        "nombre": "",
+        "cedula": "",
+        "orden": "",
+        "fecha_inicio": "",
+        "fecha_final": "",
+        "dias": "",
+        "clase": ""
     }
 
     m = re.search(
