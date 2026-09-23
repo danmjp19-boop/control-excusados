@@ -165,7 +165,7 @@ with app.app_context():
             db.session.delete(usuario)
 
         db.session.commit()
-   def extraer_datos(texto):
+def extraer_datos(texto):
 
     datos = {
         "nombre": "",
