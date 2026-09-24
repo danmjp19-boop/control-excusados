@@ -481,6 +481,7 @@ def guardar_excusa():
         fecha_inicio=request.form["fecha_inicio"],
         fecha_final=request.form["fecha_final"],
         dias=request.form["dias"],
+        clase=request.form.get("clase"),
         imagen=imagen_bytes
     )
 
