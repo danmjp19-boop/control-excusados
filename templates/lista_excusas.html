@@ -228,6 +228,7 @@ Siguiente ➡
 <th>Final</th>
 <th>Días</th>
 <th>Restantes</th>
+<th>Clase</th>
 <th>Física</th>
 <th>Acciones</th>
 </tr>
@@ -264,6 +265,7 @@ Siguiente ➡
         </span>
     {% endif %}
 </td>
+<td>{{ e.clase or "-" }}</td>
 
    <td>
     {% if e.entregada %}
