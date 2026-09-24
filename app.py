@@ -449,6 +449,8 @@ def excusas():
 @app.route("/guardar_excusa", methods=["POST"])
 def guardar_excusa():
 
+    print("CLASE RECIBIDA:", request.form.get("clase"))
+
     imagen_id = request.form.get("imagen_id")
 
     imagen_bytes = None
