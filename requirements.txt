@@ -9,3 +9,4 @@ numpy
 google-cloud-vision
 openpyxl
 xlrd==2.0.1
+psycopg[binary]
