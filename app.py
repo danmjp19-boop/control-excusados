@@ -68,6 +68,11 @@ class Excusa(db.Model):
     fecha_inicio = db.Column(db.String(20))
     fecha_final = db.Column(db.String(20))
     dias = db.Column(db.String(10))
+    clase_incapacidad = db.Column(
+        db.String(20),
+        default="TOTAL",
+        nullable=False
+    )
     fecha_registro = db.Column(db.DateTime, default=db.func.now())
     entregada = db.Column(db.Boolean, default=False, nullable=False)
     imagen = deferred(db.Column(db.LargeBinary, nullable=True))
