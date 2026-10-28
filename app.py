@@ -114,16 +114,17 @@ def contador_novedades():
     }
     
 
+
 with app.app_context():
     db.create_all()
 
-        try:
-            db.session.execute(
-                db.text("""
-                    ALTER TABLE excusa
-                    ADD COLUMN IF NOT EXISTS clase_incapacidad
-                    VARCHAR(20) NOT NULL DEFAULT 'TOTAL'
-                 """)
+    try:
+        db.session.execute(
+            db.text("""
+                ALTER TABLE excusa
+                ADD COLUMN IF NOT EXISTS clase_incapacidad
+                VARCHAR(20) NOT NULL DEFAULT 'TOTAL'
+            """)
         )
 
         db.session.execute(
@@ -140,7 +141,7 @@ with app.app_context():
     except Exception as e:
         db.session.rollback()
         print("Error verificando clase_incapacidad:", e)
- 
+
 
     admins = Usuario.query.filter_by(cedula="TAHUM-E11").all()
 
