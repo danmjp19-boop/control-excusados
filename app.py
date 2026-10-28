@@ -118,12 +118,12 @@ with app.app_context():
     db.create_all()
 
         try:
-        db.session.execute(
-            db.text("""
-                ALTER TABLE excusa
-                ADD COLUMN IF NOT EXISTS clase_incapacidad
-                VARCHAR(20) NOT NULL DEFAULT 'TOTAL'
-            """)
+            db.session.execute(
+                db.text("""
+                    ALTER TABLE excusa
+                    ADD COLUMN IF NOT EXISTS clase_incapacidad
+                    VARCHAR(20) NOT NULL DEFAULT 'TOTAL'
+                 """)
         )
 
         db.session.execute(
