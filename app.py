@@ -798,16 +798,10 @@ def editar_excusa(id):
         excusa.dias = request.form["dias"]
 
         
-excusa.clase = request.form.get(
-    "clase",
-    excusa.clase
-)
-
-excusa.clase_incapacidad = request.form.get(
-    "clase",
-    excusa.clase_incapacidad
-)
-
+        excusa.clase = request.form.get(
+            "clase",
+            excusa.clase
+        )
 
         db.session.commit()
 
