@@ -145,12 +145,14 @@ input{
        value="{{ excusa.dias }}"
        readonly>
 
-        <label>🩺 Clase de incapacidad</label>
-<select name="clase" required>
-    <option value="">Seleccione la clase</option>
-    <option value="TOTAL" {% if excusa.clase == "TOTAL" %}selected{% endif %}>TOTAL</option>
-    <option value="PARCIAL" {% if excusa.clase == "PARCIAL" %}selected{% endif %}>PARCIAL</option>
+        
+<label>🩺 Clase de incapacidad</label>
+<select name="clase_incapacidad" required
+        style="width:100%;padding:12px;font-size:16px;border:1px solid #ccc;border-radius:8px;">
+    <option value="TOTAL" {% if excusa.clase_incapacidad == "TOTAL" %}selected{% endif %}>TOTAL</option>
+    <option value="PARCIAL" {% if excusa.clase_incapacidad == "PARCIAL" %}selected{% endif %}>PARCIAL</option>
 </select>
+
 
         <div class="botones">
 
