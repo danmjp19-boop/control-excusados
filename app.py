@@ -145,6 +145,32 @@ with app.app_context():
         db.session.rollback()
         print("Error verificando columna CLASE:", e)
 
+   
+    try:
+    db.session.execute(
+        db.text("""
+            ALTER TABLE excusa
+            ADD COLUMN IF NOT EXISTS clase_incapacidad
+            VARCHAR(20) NOT NULL DEFAULT 'TOTAL'
+        """)
+    )
+
+    db.session.execute(
+        db.text("""
+            UPDATE excusa
+            SET clase_incapacidad = 'TOTAL'
+            WHERE clase_incapacidad IS NULL
+        """)
+    )
+
+    db.session.commit()
+    print("Columna clase_incapacidad verificada correctamente")
+
+except Exception as e:
+    db.session.rollback()
+    print("Error verificando clase_incapacidad:", e)
+ 
+
     admins = Usuario.query.filter_by(cedula="TAHUM-E11").all()
 
     if len(admins) == 0:
