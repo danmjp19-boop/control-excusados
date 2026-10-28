@@ -794,6 +794,11 @@ def editar_excusa(id):
         excusa.fecha_final = request.form["fecha_final"]
         excusa.dias = request.form["dias"]
 
+        excusa.clase_incapacidad = request.form.get(
+            "clase_incapacidad",
+            excusa.clase_incapacidad
+        )
+
         db.session.commit()
 
         return redirect(url_for("lista_excusas"))
