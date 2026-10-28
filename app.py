@@ -409,16 +409,22 @@ def excusas():
             with open(ruta_temporal, "wb") as f:
                 f.write(contenido)
 
-            info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
-            credentials = service_account.Credentials.from_service_account_info(info)
+            
+            # Intentar leer la excusa con Google Vision
+            try:
+                info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+                credentials = service_account.Credentials.from_service_account_info(info)
 
-            cliente = vision.ImageAnnotatorClient(credentials=credentials)
+                cliente = vision.ImageAnnotatorClient(credentials=credentials)
+                imagen = vision.Image(content=contenido)
+                respuesta = cliente.text_detection(image=imagen)
 
-            imagen = vision.Image(content=contenido)
+                texto = respuesta.full_text_annotation.text
 
-            respuesta = cliente.text_detection(image=imagen)
+            except Exception as error:
+                print(f"No se pudo leer la excusa con OCR: {error}")
+                texto = ""
 
-            texto = respuesta.full_text_annotation.text
 
             datos = extraer_datos(texto)
 
