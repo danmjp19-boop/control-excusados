@@ -63,6 +63,7 @@ class Excusa(db.Model):
     nombre = db.Column(db.String(150), nullable=False)
     cedula = db.Column(db.String(20), nullable=False)
     clase = db.Column(db.String(20), nullable=True)
+    grado = db.Column(db.String(20), nullable=True)
     cai = db.Column(db.String(100), nullable=True)
     orden = db.Column(db.String(30))
     fecha_inicio = db.Column(db.String(20))
