@@ -545,9 +545,9 @@ def descargar_excel():
     ws = wb.active
     ws.title = "Reporte de Excusas"
 
-    # COLUMNAS DEL EXCEL
     ws.append([
         "ID",
+        "Grado",
         "Nombre",
         "Cédula",
         "CAI",
@@ -556,6 +556,7 @@ def descargar_excel():
         "Final",
         "Días",
         "Restantes",
+        "Clase",
         "Física"
     ])
 
@@ -563,7 +564,6 @@ def descargar_excel():
 
     for e in excusas:
 
-        # CALCULAR DÍAS RESTANTES
         restantes = ""
 
         try:
@@ -583,19 +583,22 @@ def descargar_excel():
         except (ValueError, TypeError):
             restantes = ""
 
-        # DETERMINAR SI TIENE SOPORTE FÍSICO
         fisica = "Sí" if e.entregada else "No"
+
+        clase = e.clase_incapacidad or e.clase or ""
 
         ws.append([
             e.id,
+            e.grado or "",
             e.nombre,
             e.cedula,
-            e.cai,
+            e.cai or "",
             e.orden,
             e.fecha_inicio,
             e.fecha_final,
             e.dias,
             restantes,
+            clase,
             fisica
         ])
 
