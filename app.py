@@ -817,9 +817,10 @@ def editar_excusa(id):
 
 excusa.clase = clase_seleccionada
 excusa.clase_incapacidad = clase_seleccionada
-        db.session.commit()
 
-        return redirect(url_for("lista_excusas"))
+db.session.commit()
+
+return redirect(url_for("lista_excusas"))
 
     return render_template("editar_excusa.html", excusa=excusa)
 
