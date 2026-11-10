@@ -801,6 +801,7 @@ def editar_excusa(id):
         excusa.nombre = request.form["nombre"]
         excusa.cedula = request.form["cedula"]
         excusa.cai = request.form["cai"]
+        excusa.grado = request.form.get("grado", "")
         excusa.orden = request.form["orden"]
         excusa.fecha_inicio = request.form["fecha_inicio"]
         excusa.fecha_final = request.form["fecha_final"]
