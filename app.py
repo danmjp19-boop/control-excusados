@@ -128,6 +128,13 @@ with app.app_context():
             """)
         )
 
+     db.session.execute(
+    db.text("""
+        ALTER TABLE excusa
+        ADD COLUMN IF NOT EXISTS grado VARCHAR(20)
+    """)
+) 
+
         db.session.execute(
             db.text("""
                 UPDATE excusa
