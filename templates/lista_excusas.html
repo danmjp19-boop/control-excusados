@@ -241,6 +241,7 @@ Siguiente ➡
     data-fecha-final="{{ e.fecha_final }}">
 
 <td>{{ e.id }}</td>
+<td>{{ e.grado or "-" }}</td>
 <td>{{ e.nombre }}</td>
 <td>{{ e.cedula }}</td>
 <td>{{ e.cai or "-" }}</td>
@@ -343,9 +344,9 @@ function filtrar(){
 
     filas.forEach(function(fila){
 
-        const nombre = fila.cells[1].textContent.toLowerCase();
-        const cedula = fila.cells[2].textContent.toLowerCase();
-        const caiFila = fila.cells[3].textContent.trim();
+        const nombre = fila.cells[2].textContent.toLowerCase();
+        const cedula = fila.cells[3].textContent.toLowerCase();
+        const caiFila = fila.cells[4].textContent.trim();
 
         const estadoFila = fila.getAttribute("data-estado");
 
@@ -381,8 +382,8 @@ function filtrar(){
         }
 
         // Tomamos directamente la fecha de la columna INICIO
-        let fecha = fila.cells[5].textContent.trim();
-
+        let fecha = fila.cells[6].textContent.trim();
+        
         let anioFila = "";
         let mesFila = "";
 
@@ -546,7 +547,7 @@ window.addEventListener("load", function(){
         return;
     }
 
-    const columna = document.querySelector("#excusa-" + id + " td:nth-child(10)");
+    const columna = document.querySelector("#excusa-" + id + " td:nth-child(12)");
     const texto = document.getElementById("texto-entrega-" + id);
 
     if(datos.entregada){
