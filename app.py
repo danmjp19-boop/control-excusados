@@ -132,7 +132,7 @@ with app.app_context():
             db.text("""
                 ALTER TABLE excusa
                 ADD COLUMN IF NOT EXISTS grado VARCHAR(20)
-          V  """)
+            """)
          ) 
 
         db.session.execute(
