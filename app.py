@@ -495,6 +495,7 @@ def guardar_excusa():
     excusa = Excusa(
         nombre=request.form["nombre"],
         cedula=request.form["cedula"],
+        grado=request.form.get("grado"),
         cai=request.form["cai"],
         orden=orden,
         fecha_inicio=request.form["fecha_inicio"],
