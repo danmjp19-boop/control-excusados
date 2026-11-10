@@ -120,6 +120,15 @@ input{
 
 </select>
 
+        <br><br>
+<label>🎖️ Grado</label>
+<select name="grado" required>
+    <option value="">Seleccione el grado</option>
+    {% for g in ["CR", "TC", "MY", "CT", "TE", "ST", "CM", "SC", "IJ", "IT", "SI", "PT", "PP", "AP", "N/U"] %}
+        <option value="{{ g }}" {% if excusa.grado == g %}selected{% endif %}>{{ g }}</option>
+    {% endfor %}
+</select>
+
         <label>Orden</label>
         <input type="text" name="orden"
                value="{{ excusa.orden }}">
